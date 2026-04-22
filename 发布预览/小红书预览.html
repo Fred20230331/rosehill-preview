@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>小红书 发布预览 — Rosehill College</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f5f5f5;
+    font-family: 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', Arial, sans-serif;
+    padding: 32px 0;
+  }
+
+  .page-label {
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+  }
+
+  /* 手机外框 */
+  .phone {
+    width: 390px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    overflow: hidden;
+    padding-bottom: 24px;
+  }
+
+  /* 状态栏 */
+  .status-bar {
+    background: #fff;
+    padding: 12px 24px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  /* 小红书顶栏 */
+  .xhs-topbar {
+    padding: 0 16px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .back-btn { font-size: 20px; color: #333; }
+
+  .xhs-tabs {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .xhs-tab { font-size: 16px; color: #999; }
+  .xhs-tab.active { font-weight: 700; color: #333; position: relative; }
+  .xhs-tab.active::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+    width: 16px; height: 3px; background: #fe2c55; border-radius: 2px;
+  }
+
+  .xhs-icons { display: flex; gap: 16px; }
+  .xhs-icon { font-size: 20px; }
+
+  /* 笔记封面+标题（首图） */
+  .note-cover {
+    width: 100%;
+    aspect-ratio: 3/4;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 封面背景 */
+  .cover-bg {
+    width: 100%; height: 100%;
+    background: url('../图片素材/官网照片/rosehill-values.avif') center / cover;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    position: relative; overflow: hidden;
+  }
+
+  .cover-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(10,20,30,0.75) 65%, rgba(10,20,30,0.95) 100%);
+  }
+
+  .cover-deco { position: absolute; top: 24px; right: 24px; width: 120px; height: 120px; border-radius: 50%; border: 2px solid rgba(200,151,42,0.2); }
+  .cover-flag { position: absolute; top: 24px; left: 24px; font-size: 36px; }
+
+  .cover-content { position: relative; z-index: 2; padding: 0 24px 24px; }
+  .cover-tag-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .cover-tag-line { width: 24px; height: 2px; background: #C8972A; }
+  .cover-tag-text { font-size: 12px; color: #C8972A; letter-spacing: 2px; text-transform: uppercase; }
+
+  .cover-title { font-size: 28px; font-weight: 900; color: #fff; line-height: 1.25; margin-bottom: 12px; }
+  .cover-title .hl { color: #C8972A; }
+
+  .cover-sub { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; margin-bottom: 20px; }
+
+  .cover-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .cover-chip {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 6px 14px; font-size: 12px; color: rgba(255,255,255,0.65);
+  }
+
+  .cover-school { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px; }
+  .cover-school-name { font-size: 14px; font-weight: 700; color: #C8972A; }
+  .cover-school-loc { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+  .cover-cta { background: #C8972A; color: #1C2B3A; font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 20px; }
+
+  /* 作者信息 */
+  .author-bar {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .author-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #1C2B3A;
+    display: flex; align-items: center; justify-content: center;
+    color: #C8972A; font-weight: 800; font-size: 14px; flex-shrink: 0;
+  }
+
+  .author-info { flex: 1; }
+  .author-name { font-size: 14px; font-weight: 600; color: #333; }
+  .author-tag { font-size: 12px; color: #999; margin-top: 1px; }
+  .follow-xhs { background: #fe2c55; color: #fff; font-size: 13px; font-weight: 600; padding: 6px 16px; border-radius: 20px; }
+
+  /* 标题 */
+  .note-title {
+    padding: 0 16px 8px;
+    font-size: 18px; font-weight: 700; color: #1a1a1a; line-height: 1.4;
+  }
+
+  /* 正文 */
+  .note-body {
+    padding: 0 16px;
+    font-size: 15px; color: #333; line-height: 1.9;
+  }
+
+  .note-body p { margin-bottom: 12px; }
+  .note-body .section-title { font-weight: 700; color: #1C2B3A; margin-top: 4px; }
+  .note-body .highlight { background: rgba(200,151,42,0.12); color: #8a6512; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+  .note-body .quote-block {
+    border-left: 3px solid #C8972A;
+    padding: 12px 16px;
+    background: #faf8f3;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+    font-style: italic;
+    color: #555;
+  }
+
+  /* Hashtags */
+  .note-tags {
+    padding: 12px 16px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .note-tag { color: #fe2c55; font-size: 14px; }
+
+  /* 互动栏 */
+  .action-bar-xhs {
+    padding: 12px 16px 0;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 8px;
+  }
+
+  .xhs-action { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #999; font-size: 12px; }
+  .xhs-action .icon { font-size: 22px; }
+  .xhs-action.liked .icon { filter: hue-rotate(0deg); }
+</style>
+</head>
+<body>
+
+<div class="page-label">📕 小红书 — 发布预览 · Rosehill College</div>
+
+<div class="phone">
+  <!-- 状态栏 -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <span>●●● 🔋</span>
+  </div>
+
+  <!-- 顶部导航 -->
+  <div class="xhs-topbar">
+    <div class="back-btn">←</div>
+    <div class="xhs-tabs">
+      <div class="xhs-tab">关注</div>
+      <div class="xhs-tab active">发现</div>
+      <div class="xhs-tab">上海</div>
+    </div>
+    <div class="xhs-icons">
+      <div class="xhs-icon">🔍</div>
+      <div class="xhs-icon">✉️</div>
+    </div>
+  </div>
+
+  <!-- 笔记封面 -->
+  <div class="note-cover">
+    <div class="cover-bg">
+      <div class="cover-overlay"></div>
+      <div class="cover-deco"></div>
+      <div class="cover-flag">🇳🇿</div>
+      <div class="cover-content">
+        <div class="cover-tag-row">
+          <div class="cover-tag-line"></div>
+          <div class="cover-tag-text">Student Story</div>
+        </div>
+        <div class="cover-title">一个中国女生<br>在新西兰当上了<br><span class="hl">国际学生领袖</span></div>
+        <div class="cover-sub">Theana 来自中国，三年前独自来到奥克兰。<br>让她留下来的，是第一天同学走过来的那一刻。</div>
+        <div class="cover-chips">
+          <div class="cover-chip">🏫 Rosehill College</div>
+          <div class="cover-chip">📍 奥克兰·帕帕库拉</div>
+        </div>
+        <div class="cover-school">
+          <div>
+            <div class="cover-school-name">Rosehill College</div>
+            <div class="cover-school-loc">Papakura, Auckland · Est. 1970</div>
+          </div>
+          <div class="cover-cta">了解更多 →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 作者信息 -->
+  <div class="author-bar">
+    <div class="author-avatar">RC</div>
+    <div class="author-info">
+      <div class="author-name">Rosehill College 官方</div>
+      <div class="author-tag">新西兰教育机构 · 已认证</div>
+    </div>
+    <div class="follow-xhs">+ 关注</div>
+  </div>
+
+  <!-- 标题 -->
+  <div class="note-title">一个中国女生在新西兰当上「国际学生领袖」是什么体验🇳🇿</div>
+
+  <!-- 正文 -->
+  <div class="note-body">
+    <p>Theana来自中国，三年前只身来到奥克兰南部的 Rosehill College。</p>
+    <p>她说，第一天到校，让她留下来的不是课程，不是设施——</p>
+    <p><span class="highlight">是同学主动走过来和她说话的那一刻。</span></p>
+
+    <p>三年后，她成了学校的 International Student Leader，负责帮助每一个像她当年那样初来乍到的留学生适应新生活。</p>
+
+    <div class="quote-block">
+      「担任这个角色让我在和别人沟通时变得更自信，最有意思的部分是——我认识了来自完全不同文化背景的朋友。」
+      <br><br>— Theana Chen，2024年国际学生领袖
+    </div>
+
+    <p>很多家长问我：<span class="section-title">孩子去新西兰读中学，会不会很孤独？</span></p>
+
+    <p>Theana 的答案是：看你去的地方，也看你愿不愿意走出去。</p>
+
+    <p>Rosehill 有六个 House（类似学院制），从第一天起你就属于一个小集体。有 Kapa Haka（毛利传统表演），有各种体育队，课外活动切入点很多。</p>
+
+    <p>✅ <span class="section-title">专职国际学生办公室</span>，符合新西兰《2021教育关怀法规》<br>
+    ✅ <span class="section-title">寄宿家庭由学校审核安排</span>，可提前沟通偏好</p>
+
+    <p>如果你的孩子正在考虑新西兰中学留学，欢迎评论区提问，或直接私信。</p>
+
+    <p>联系邮箱：<span class="highlight">inquiries@rosehillcollege.school.nz</span></p>
+  </div>
+
+  <!-- Hashtags -->
+  <div class="note-tags">
+    <span class="note-tag">#新西兰留学</span>
+    <span class="note-tag">#新西兰中学</span>
+    <span class="note-tag">#奥克兰留学</span>
+    <span class="note-tag">#国际学生</span>
+    <span class="note-tag">#RosehillCollege</span>
+    <span class="note-tag">#留学真实体验</span>
+  </div>
+
+  <!-- 互动栏 -->
+  <div class="action-bar-xhs">
+    <div class="xhs-action">
+      <div class="icon">🤍</div>
+      <div>3,241</div>
+    </div>
+    <div class="xhs-action">
+      <div class="icon">⭐</div>
+      <div>1,890</div>
+    </div>
+    <div class="xhs-action">
+      <div class="icon">💬</div>
+      <div>486</div>
+    </div>
+    <div class="xhs-action">
+      <div class="icon">↗️</div>
+      <div>分享</div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center; margin-top: 32px; color: #aaa; font-size: 12px; padding-bottom: 32px;">
+  图片来源：Rosehill College 官网真实照片
+</div>
+
+</body>
+</html>
