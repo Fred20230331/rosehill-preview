@@ -3,472 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>微信公众号 发布预览 — Rosehill College</title>
+<title>微信公众号 发布预览 — Rosehill College · 2026-04-23</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #ededed; font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', Arial, sans-serif; padding: 32px 0 60px; -webkit-font-smoothing: antialiased; }
 
-  body {
-    background: #ededed;
-    font-family: -apple-system, 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', Arial, sans-serif;
-    padding: 32px 0 60px;
-    -webkit-font-smoothing: antialiased;
-  }
+  .page-label { text-align: center; color: #888; font-size: 13px; letter-spacing: 2px; margin-bottom: 8px; }
+  .batch-tag { text-align: center; margin-bottom: 20px; }
+  .batch-tag span { background: #07c160; color: #fff; font-size: 12px; padding: 4px 14px; border-radius: 20px; letter-spacing: 1px; }
 
-  .page-label {
-    text-align: center;
-    color: #888;
-    font-size: 13px;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-  }
-
-  /* 手机外框 */
-  .phone-shell {
-    width: 390px;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 40px;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.18);
-    overflow: hidden;
-  }
-
-  /* 状态栏 */
-  .status-bar {
-    background: #fff;
-    padding: 14px 24px 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    font-weight: 600;
-    color: #000;
-  }
-
-  /* 微信顶部导航 */
-  .wechat-nav {
-    background: #f7f7f7;
-    border-bottom: 1px solid #e5e5e5;
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
+  .phone-shell { width: 390px; margin: 0 auto; background: #fff; border-radius: 40px; box-shadow: 0 24px 80px rgba(0,0,0,0.18); overflow: hidden; }
+  .status-bar { background: #fff; padding: 14px 24px 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; color: #000; }
+  .wechat-nav { background: #f7f7f7; border-bottom: 1px solid #e5e5e5; padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
   .nav-back { font-size: 22px; color: #000; }
   .nav-title { flex: 1; text-align: center; font-size: 17px; font-weight: 600; color: #000; }
   .nav-more { font-size: 22px; color: #000; letter-spacing: -1px; }
 
-  /* 文章区域 */
-  .article {
-    background: #fff;
-    overflow-y: auto;
-    max-height: 720px;
-  }
+  .article { background: #fff; overflow-y: auto; max-height: 720px; }
 
-  /* 封面图 */
   .cover-img {
-    width: 100%;
-    aspect-ratio: 2.35/1;
-    background: url('../图片素材/官网照片/mariah-turner.png') center top / cover;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: flex-end;
+    width: 100%; aspect-ratio: 2.35/1;
+    background: linear-gradient(to bottom, rgba(13,27,42,0.18) 0%, rgba(13,27,42,0.78) 100%), url('../图片素材/官网照片/student-leaders-banner.jpg') center top / cover;
+    position: relative; overflow: hidden; display: flex; align-items: flex-end;
   }
+  .cover-img .overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.5) 100%); }
+  .cover-img .cover-text { position: relative; z-index: 2; padding: 16px 20px; width: 100%; }
+  .cover-img .cover-label { display: inline-block; background: #C8972A; color: #1C2B3A; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 3px 10px; border-radius: 3px; margin-bottom: 8px; }
+  .cover-img .cover-title-sm { font-size: 18px; font-weight: 800; color: #fff; line-height: 1.3; }
 
-  .cover-img .overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%);
-  }
-
-  .cover-img .deco {
-    position: absolute; right: -40px; top: -40px;
-    width: 220px; height: 220px; border-radius: 50%;
-    border: 30px solid rgba(200,151,42,0.07);
-  }
-
-  .cover-img .photo-hint {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -55%);
-    font-size: 48px; opacity: 0.12;
-  }
-
-  .cover-img .cover-text {
-    position: relative; z-index: 2;
-    padding: 16px 20px;
-    width: 100%;
-  }
-
-  .cover-img .cover-label {
-    display: inline-block;
-    background: #C8972A;
-    color: #1C2B3A;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 3px 10px;
-    border-radius: 3px;
-    margin-bottom: 8px;
-  }
-
-  .cover-img .cover-title-sm {
-    font-size: 18px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.3;
-  }
-
-  /* 文章标题区 */
-  .article-header {
-    padding: 20px 16px 0;
-  }
-
-  .article-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: #1a1a1a;
-    line-height: 1.45;
-    margin-bottom: 12px;
-    letter-spacing: -0.3px;
-  }
-
-  .article-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid #f0f0f0;
-  }
-
-  .meta-avatar {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: #1C2B3A;
-    display: flex; align-items: center; justify-content: center;
-    color: #C8972A; font-weight: 800; font-size: 12px;
-    flex-shrink: 0;
-  }
-
+  .article-header { padding: 20px 16px 0; }
+  .article-title { font-size: 22px; font-weight: 700; color: #1a1a1a; line-height: 1.45; margin-bottom: 12px; }
+  .article-meta { display: flex; align-items: center; gap: 10px; padding-bottom: 14px; border-bottom: 1px solid #f0f0f0; }
+  .meta-avatar { width: 32px; height: 32px; border-radius: 50%; background: #1C2B3A; display: flex; align-items: center; justify-content: center; color: #C8972A; font-weight: 800; font-size: 12px; flex-shrink: 0; }
   .meta-info { flex: 1; }
   .meta-account { font-size: 14px; font-weight: 600; color: #333; }
   .meta-date { font-size: 12px; color: #999; margin-top: 1px; }
+  .follow-wechat { background: #07c160; color: #fff; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 4px; }
 
-  .follow-wechat {
-    background: #07c160;
-    color: #fff;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 6px 14px;
-    border-radius: 4px;
-  }
+  .article-body { padding: 20px 16px; font-size: 16px; color: #3d3d3d; line-height: 1.9; }
+  .article-body p { margin-bottom: 16px; }
 
-  /* 文章正文 */
-  .article-body {
-    padding: 20px 16px;
-    font-size: 16px;
-    color: #3d3d3d;
-    line-height: 1.9;
-  }
+  .wechat-h2 { display: flex; align-items: center; gap: 10px; margin: 28px 0 14px; }
+  .wechat-h2-bar { width: 4px; height: 22px; background: #C8972A; border-radius: 2px; flex-shrink: 0; }
+  .wechat-h2-text { font-size: 18px; font-weight: 700; color: #1C2B3A; }
 
-  .article-body p {
-    margin-bottom: 16px;
-  }
+  .wechat-quote { background: #f7f5f0; border-left: 3px solid #C8972A; padding: 14px 16px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 15px; color: #555; font-style: italic; line-height: 1.7; }
+  .wechat-quote cite { display: block; margin-top: 8px; font-style: normal; font-size: 13px; color: #999; }
 
-  /* 微信公众号特色：装饰性小标题 */
-  .wechat-h2 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 28px 0 14px;
-  }
-
-  .wechat-h2-bar {
-    width: 4px;
-    height: 22px;
-    background: #C8972A;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-
-  .wechat-h2-text {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1C2B3A;
-  }
-
-  /* 引用块 */
-  .wechat-quote {
-    background: #f7f5f0;
-    border-left: 3px solid #C8972A;
-    padding: 14px 16px;
-    border-radius: 0 8px 8px 0;
-    margin: 16px 0;
-    font-size: 15px;
-    color: #555;
-    font-style: italic;
-    line-height: 1.7;
-  }
-
-  .wechat-quote cite {
-    display: block;
-    margin-top: 8px;
-    font-style: normal;
-    font-size: 13px;
-    color: #999;
-  }
-
-  /* 数据卡片 */
-  .data-card {
-    background: #1C2B3A;
-    border-radius: 12px;
-    padding: 20px 20px 16px;
-    margin: 20px 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0;
-  }
-
-  .data-item {
-    text-align: center;
-    padding: 0 8px;
-    position: relative;
-  }
-
-  .data-item + .data-item::before {
-    content: '';
-    position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-    height: 36px; width: 1px;
-    background: rgba(200,151,42,0.25);
-  }
-
-  .data-num { font-size: 28px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 4px; }
-  .data-num span { color: #C8972A; }
-  .data-label { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 1px; }
-
-  /* 内嵌图片区（行文间图片） */
-  .inline-img {
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 16px 0;
-  }
-
-  .inline-img-placeholder {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: linear-gradient(135deg, #e8e4dc, #d4cfc6);
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 8px;
-    color: #aaa; font-size: 13px;
-  }
-
-  .inline-img-placeholder .icon { font-size: 32px; opacity: 0.4; }
-
-  .img-caption {
-    font-size: 12px; color: #999; text-align: center;
-    padding: 6px 0 0; font-style: italic;
-  }
-
-  /* 重点高亮 */
-  .highlight-box {
-    background: linear-gradient(135deg, rgba(28,43,58,0.05), rgba(200,151,42,0.08));
-    border: 1px solid rgba(200,151,42,0.2);
-    border-radius: 10px;
-    padding: 16px 18px;
-    margin: 16px 0;
-  }
-
-  .highlight-box p {
-    font-size: 15px;
-    color: #2d2d2d;
-    margin-bottom: 8px;
-    line-height: 1.7;
-  }
-
+  .highlight-box { background: linear-gradient(135deg, rgba(28,43,58,0.05), rgba(200,151,42,0.08)); border: 1px solid rgba(200,151,42,0.2); border-radius: 10px; padding: 16px 18px; margin: 16px 0; }
+  .highlight-box p { font-size: 15px; color: #2d2d2d; margin-bottom: 8px; line-height: 1.7; }
   .highlight-box p:last-child { margin-bottom: 0; }
 
-  /* 结尾关注引导 */
-  .follow-section {
-    margin: 28px 0 0;
-    padding: 20px 16px;
-    background: #f7f7f7;
-    text-align: center;
-  }
+  .inline-img { width: 100%; border-radius: 8px; overflow: hidden; margin: 16px 0; }
+  .img-caption { font-size: 12px; color: #999; text-align: center; padding: 6px 0 0; font-style: italic; }
 
-  .follow-account-avatar {
-    width: 56px; height: 56px; border-radius: 12px;
-    background: #1C2B3A;
-    display: flex; align-items: center; justify-content: center;
-    color: #C8972A; font-weight: 800; font-size: 20px;
-    margin: 0 auto 10px;
-  }
-
+  .follow-section { margin: 28px 0 0; padding: 20px 16px; background: #f7f7f7; text-align: center; }
+  .follow-account-avatar { width: 56px; height: 56px; border-radius: 12px; background: #1C2B3A; display: flex; align-items: center; justify-content: center; color: #C8972A; font-weight: 800; font-size: 20px; margin: 0 auto 10px; }
   .follow-account-name { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 4px; }
   .follow-account-desc { font-size: 13px; color: #999; margin-bottom: 14px; }
-  .follow-btn-wechat {
-    display: inline-block;
-    background: #07c160;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 10px 32px;
-    border-radius: 6px;
-  }
+  .follow-btn-wechat { display: inline-block; background: #07c160; color: #fff; font-size: 14px; font-weight: 600; padding: 10px 32px; border-radius: 6px; }
 
-  /* 底部互动栏 */
-  .bottom-bar {
-    background: #fff;
-    border-top: 1px solid #e5e5e5;
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .read-count { font-size: 13px; color: #999; display: flex; align-items: center; gap: 4px; }
-
+  .bottom-bar { background: #fff; border-top: 1px solid #e5e5e5; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+  .read-count { font-size: 13px; color: #999; }
   .bottom-actions { display: flex; gap: 20px; }
-
-  .bottom-action {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    font-size: 11px;
-    color: #999;
-  }
-
+  .bottom-action { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; color: #999; }
   .bottom-action .bicon { font-size: 22px; }
-  .bottom-action.liked .bicon { filter: none; }
 
-  /* 底部Home bar */
-  .home-bar {
-    padding: 8px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .home-indicator {
-    width: 120px; height: 5px;
-    background: #000;
-    border-radius: 3px;
-    opacity: 0.2;
-  }
+  .home-bar { padding: 8px; display: flex; justify-content: center; }
+  .home-indicator { width: 120px; height: 5px; background: #000; border-radius: 3px; opacity: 0.2; }
 </style>
 </head>
 <body>
 
 <div class="page-label">💬 微信公众号 — 发布预览 · Rosehill College</div>
+<div class="batch-tag"><span>第二期 · 2026-04-23</span></div>
 
 <div class="phone-shell">
-
-  <!-- 状态栏 -->
-  <div class="status-bar">
-    <span>9:41</span>
-    <span style="font-size:16px;">●●● 🔋</span>
-  </div>
-
-  <!-- 微信顶部导航 -->
+  <div class="status-bar"><span>9:41</span><span style="font-size:16px;">●●● 🔋</span></div>
   <div class="wechat-nav">
     <div class="nav-back">‹</div>
     <div class="nav-title">Rosehill College</div>
     <div class="nav-more">···</div>
   </div>
 
-  <!-- 文章 -->
   <div class="article">
-
-    <!-- 封面图 -->
     <div class="cover-img">
       <div class="overlay"></div>
-      <div class="deco"></div>
       <div class="cover-text">
-        <div class="cover-label">校友故事</div>
-        <div class="cover-title-sm">从南奥克兰到世界冠军挑战赛<br>她是我们的骄傲</div>
+        <div class="cover-label">留学生故事</div>
+        <div class="cover-title-sm">一个中国女生，三年后成了<br>新西兰学校的「国际学生领袖」</div>
       </div>
     </div>
 
-    <!-- 标题区 -->
     <div class="article-header">
-      <div class="article-title">从南奥克兰出发，她将在4月29日挑战WBC世界拳击冠军</div>
+      <div class="article-title">从第一天被问候，到三年后去问候别人——Theana 在 Rosehill 的故事</div>
       <div class="article-meta">
         <div class="meta-avatar">RC</div>
         <div class="meta-info">
           <div class="meta-account">Rosehill College 官方</div>
-          <div class="meta-date">2025年4月22日</div>
+          <div class="meta-date">2026年4月23日</div>
         </div>
         <div class="follow-wechat">关注</div>
       </div>
     </div>
 
-    <!-- 正文 -->
     <div class="article-body">
+      <p>Theana Chen 来自中国，三年前只身来到奥克兰南部的 Rosehill College。</p>
+      <p>她说，第一天到校，让她决定留下来的，不是课程安排，不是硬件设施——</p>
 
-      <p>2012年，Mariah Turner 从 Rosehill College 毕业，带着南奥克兰给她的一切——坚韧、专注，以及从不轻言放弃的信念——走向了更大的世界。</p>
+      <div class="wechat-quote">
+        「是同学主动走过来和我说话的那一刻。」
+        <cite>— Theana Chen，来自中国，在校三年</cite>
+      </div>
 
-      <p>13年后，她将站在墨尔本的职业拳击台上，争夺 WBC 中级超雏量级世界冠军头衔，赛事将在 DAZN 和 Fox Sports Australia 全球直播。</p>
+      <p>三年后，Theana 成了 Rosehill 的 International Student Leader（国际学生领袖）。她的职责，是帮助每一个像她当年那样刚抵达新环境的留学生适应新生活——做那个主动走过去的人。</p>
 
-      <div class="data-card">
-        <div class="data-item">
-          <div class="data-num">12<span>-1</span></div>
-          <div class="data-label">职业战绩</div>
-        </div>
-        <div class="data-item">
-          <div class="data-num"><span>6</span></div>
-          <div class="data-label">KO次数</div>
-        </div>
-        <div class="data-item">
-          <div class="data-num"><span>IBF</span></div>
-          <div class="data-label">现任冠军</div>
-        </div>
+      <div class="inline-img">
+        <img src="../图片素材/官网照片/student-leaders-banner.jpg" style="width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center top;display:block;border-radius:8px;">
+        <div class="img-caption">Rosehill College 学生领袖团队，Papakura, Auckland</div>
       </div>
 
       <div class="wechat-h2">
         <div class="wechat-h2-bar"></div>
-        <div class="wechat-h2-text">「她代表的，是每一个敢于相信自己的人」</div>
+        <div class="wechat-h2-text">「最有意思的部分是——我认识了来自完全不同文化背景的朋友」</div>
       </div>
 
-      <p>在 Rosehill College，我们不衡量学生离开时手里拿着什么，而是他们离开时成为了什么样的人。</p>
-
-      <div class="wechat-quote">
-        "From her time at Rosehill College to competing under the global spotlight, she represents what can be achieved through focus and belief in your goals."
-        <cite>— Rosehill College</cite>
-      </div>
-
-      <p>Mariah 的故事是学校四大价值观的最好注脚：<strong>Hihiritanga</strong>（坚韧努力）、<strong>Rangatiratanga</strong>（追求卓越）、<strong>Whanaungatanga</strong>（相互尊重）、<strong>Manaakitanga</strong>（关怀连接）。</p>
-
-      <div class="inline-img">
-        <img src="../图片素材/官网照片/mariah-turner.png" style="width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center top;display:block;border-radius:8px;">
-        <div class="img-caption">Mariah Turner，职业名号"The Golden Girl"，2012年 Rosehill College 毕业生</div>
-      </div>
+      <p>担任国际学生领袖这个角色，让 Theana 获得了大量与不同背景的人沟通的经验，她说自己在与人交流时变得更加自信。</p>
+      <p>很多家长会问：孩子一个人去新西兰读中学，会不会很孤独？Theana 的答案是——<strong>看你去的地方，也看你愿不愿意走出去。</strong></p>
+      <p>Rosehill 的 House 制度（六个学院：Atawhai、Kahurangi、Manutaki、Pounamu、Rangatahi、Taikura）让每个学生从入学第一天就属于一个小集体。学校还有 Kapa Haka 毛利传统表演队、艺术节、多支体育竞技队，社交切入点很多。</p>
 
       <div class="wechat-h2">
         <div class="wechat-h2-bar"></div>
         <div class="wechat-h2-text">关于 Rosehill College</div>
       </div>
 
-      <p>Rosehill College 位于新西兰奥克兰南部帕帕库拉，创建于1970年，是一所 Year 9-13 男女混合公立中学。</p>
-
       <div class="highlight-box">
-        <p>✅ 专职国际学生办公室，提供全程关怀支持</p>
-        <p>✅ 中英双语沟通，寄宿家庭由学校审核安排</p>
-        <p>✅ 符合新西兰《2021年教育关怀法规》</p>
-        <p>✅ 提供 NCEA 学历，获全球主要大学认可</p>
+        <p>📍 位于新西兰奥克兰南部帕帕库拉，Year 9-13 公立综合中学，创建于1970年</p>
+        <p>✅ 专职国际学生办公室，可用中文沟通，全程关怀支持</p>
+        <p>✅ 寄宿家庭由学校审核安排，符合新西兰《2021年教育关怀法规》</p>
+        <p>✅ NCEA 学历，获全球主要大学认可</p>
       </div>
 
       <div class="inline-img">
         <img src="../图片素材/官网照片/life-at-rhc.avif" style="width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center;display:block;border-radius:8px;">
-        <div class="img-caption">Rosehill College 校园，5 Edinburgh Avenue, Papakura, Auckland</div>
+        <div class="img-caption">Rosehill College 校园生活</div>
       </div>
 
-      <p>目前正在为孩子考虑新西兰中学留学方案的家庭，欢迎通过以下方式联系我们：</p>
-
+      <p>正在为孩子考虑新西兰中学的家庭，欢迎通过以下方式咨询：</p>
       <p style="color:#07c160; font-weight:600;">📧 inquiries@rosehillcollege.school.nz<br>📞 +64 9 295 0661<br>🌐 rosehillcollege.school.nz</p>
-
-      <p style="font-size:14px; color:#999; margin-top: 8px;">* 4月29日比赛结果我们将在第一时间更新，为 Mariah 加油！🥊🇳🇿</p>
-
     </div>
 
-    <!-- 关注引导 -->
     <div class="follow-section">
       <div class="follow-account-avatar">RC</div>
       <div class="follow-account-name">Rosehill College 官方</div>
@@ -476,37 +160,19 @@
       <div class="follow-btn-wechat">+ 关注公众号</div>
     </div>
 
-    <!-- 底部互动栏 -->
     <div class="bottom-bar">
-      <div class="read-count">👁 4,821次阅读</div>
+      <div class="read-count">👁 3,218次阅读</div>
       <div class="bottom-actions">
-        <div class="bottom-action">
-          <div class="bicon">👍</div>
-          <div>点赞 382</div>
-        </div>
-        <div class="bottom-action">
-          <div class="bicon">⭐</div>
-          <div>收藏 219</div>
-        </div>
-        <div class="bottom-action">
-          <div class="bicon">↗️</div>
-          <div>分享</div>
-        </div>
+        <div class="bottom-action"><div class="bicon">👍</div><div>点赞 264</div></div>
+        <div class="bottom-action"><div class="bicon">⭐</div><div>收藏 183</div></div>
+        <div class="bottom-action"><div class="bicon">↗️</div><div>分享</div></div>
       </div>
     </div>
-
-  </div><!-- end article -->
-
-  <!-- Home indicator -->
-  <div class="home-bar">
-    <div class="home-indicator"></div>
   </div>
 
-</div><!-- end phone-shell -->
-
-<div style="text-align:center; margin-top: 32px; color: #aaa; font-size: 12px;">
-  图片来源：Rosehill College 官网真实照片
+  <div class="home-bar"><div class="home-indicator"></div></div>
 </div>
 
+<div style="text-align:center;margin-top:32px;color:#aaa;font-size:12px;">图片由 Signals × WASC 制作 · 2026-04-23</div>
 </body>
 </html>

@@ -2,389 +2,94 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Facebook 发布预览 — Rosehill College</title>
+<title>Facebook 发布预览 — Rosehill College · 2026-04-23</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: #f0f2f5;
-    font-family: -apple-system, 'Segoe UI', Arial, sans-serif;
-    padding: 32px 0;
-    min-height: 100vh;
+  body { background: #f0f2f5; font-family: -apple-system, 'Segoe UI', Arial, sans-serif; padding: 32px 0; min-height: 100vh; }
+
+  .page-label { text-align: center; color: #888; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .batch-tag { text-align: center; margin-bottom: 28px; }
+  .batch-tag span { background: #1877f2; color: #fff; font-size: 12px; padding: 4px 14px; border-radius: 20px; letter-spacing: 1px; }
+
+  .feed { max-width: 500px; margin: 0 auto; }
+  .post { background: #fff; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); overflow: hidden; }
+
+  .post-header { display: flex; align-items: center; padding: 12px 16px; gap: 10px; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: #1C2B3A; display: flex; align-items: center; justify-content: center; color: #C8972A; font-weight: 800; font-size: 14px; flex-shrink: 0; }
+  .page-name { font-weight: 600; font-size: 15px; color: #050505; }
+  .post-meta { font-size: 13px; color: #65676b; margin-top: 2px; }
+  .more-btn { font-size: 20px; color: #65676b; margin-left: auto; padding: 4px 8px; }
+
+  .post-cover {
+    width: 100%; aspect-ratio: 4/3;
+    background: linear-gradient(to bottom, rgba(13,27,42,0.18) 0%, rgba(13,27,42,0.82) 60%), url('../图片素材/官网照片/student-leaders-banner.jpg') center top / cover;
+    display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden;
   }
+  .gold-bar { position: absolute; left: 0; top: 0; width: 5px; height: 100%; background: linear-gradient(180deg,#C8972A,#f0c060,#C8972A); }
+  .cover-content { padding: 24px; position: relative; z-index: 2; }
+  .cover-eyebrow { font-size: 12px; color: #C8972A; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+  .cover-title { font-size: 28px; font-weight: 800; color: #fff; line-height: 1.2; }
+  .cover-title span { color: #C8972A; }
+  .cover-sub { font-size: 14px; color: rgba(255,255,255,0.65); margin-top: 8px; }
 
-  .page-label {
-    text-align: center;
-    color: #888;
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
+  .post-body { padding: 12px 16px 8px; font-size: 15px; color: #050505; line-height: 1.65; }
+  .post-body p { margin-bottom: 10px; }
+  .post-body .hashtags { color: #1877f2; font-size: 14px; margin-top: 4px; line-height: 2; }
 
-  /* Facebook feed container */
-  .feed {
-    max-width: 500px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
+  .reaction-bar { padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #e4e6eb; border-bottom: 1px solid #e4e6eb; margin-top: 8px; }
+  .reactions { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #65676b; }
+  .counts { font-size: 14px; color: #65676b; }
 
-  /* Post card */
-  .post {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    overflow: hidden;
-  }
-
-  .post-header {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    gap: 10px;
-  }
-
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #1C2B3A;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #C8972A;
-    font-weight: 800;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  .post-meta { flex: 1; }
-  .post-name { font-weight: 700; font-size: 15px; color: #050505; }
-  .post-time { font-size: 13px; color: #65676B; margin-top: 1px; }
-  .post-time span { margin-right: 4px; }
-
-  .more-btn {
-    color: #65676B;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 4px 8px;
-  }
-
-  .post-text {
-    padding: 0 16px 12px;
-    font-size: 15px;
-    color: #050505;
-    line-height: 1.6;
-    white-space: pre-line;
-  }
-
-  .post-text .hashtags {
-    color: #1877F2;
-    font-size: 14px;
-    margin-top: 8px;
-    display: block;
-    line-height: 1.8;
-  }
-
-  /* Post image */
-  .post-image {
-    width: 100%;
-    aspect-ratio: 1/1;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Mariah Turner 卡片样式（模拟AI生成图+HTML卡片叠合效果） */
-  .img-mariah {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(13,27,42,0.28) 0%, rgba(13,27,42,0.88) 58%), url('../图片素材/官网照片/mariah-turner.png') center top / cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    position: relative;
-  }
-
-  .img-mariah .gold-bar {
-    position: absolute; left: 0; top: 0; width: 5px; height: 100%;
-    background: linear-gradient(180deg, #C8972A, #f0c060, #C8972A);
-  }
-
-  .img-mariah .deco {
-    position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
-    width: 280px; height: 280px; border-radius: 50%;
-    border: 40px solid rgba(200,151,42,0.06);
-  }
-
-  .img-mariah .school-tag-sm {
-    position: absolute; top: 20px; left: 20px;
-    color: #C8972A; font-size: 11px; letter-spacing: 2px;
-    text-transform: uppercase; font-weight: 600;
-  }
-
-  .img-mariah .content {
-    position: relative; z-index: 2; padding: 0 24px 24px 28px;
-  }
-
-  .img-mariah .label-sm { font-size: 11px; color: #C8972A; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
-  .img-mariah .name { font-size: 44px; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 4px; }
-  .img-mariah .nick { font-size: 18px; color: #C8972A; font-style: italic; margin-bottom: 24px; }
-
-  .img-mariah .stats { display: flex; gap: 24px; margin-bottom: 20px; }
-  .img-mariah .stat .num { font-size: 32px; font-weight: 800; color: #fff; line-height: 1; }
-  .img-mariah .stat .lbl { font-size: 11px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
-  .img-mariah .div { width: 1px; height: 40px; background: rgba(200,151,42,0.3); align-self: center; }
-
-  .img-mariah .title-sm { font-size: 13px; color: rgba(255,255,255,0.75); margin-bottom: 10px; }
-  .img-mariah .title-sm strong { color: #C8972A; }
-  .img-mariah .class-tag { display: inline-block; font-size: 11px; color: rgba(255,255,255,0.35); border: 1px solid rgba(255,255,255,0.12); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
-
-  /* Engagement bar */
-  .engagement {
-    padding: 4px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #E4E6EB;
-  }
-
-  .react-count {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 15px;
-    color: #65676B;
-  }
-
-  .react-icons { display: flex; }
-  .react-icon {
-    width: 20px; height: 20px; border-radius: 50%;
-    border: 2px solid white;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; margin-left: -4px;
-  }
-  .react-icon:first-child { margin-left: 0; }
-  .ri-like { background: #1877F2; }
-  .ri-love { background: #F33E58; }
-  .ri-wow { background: #F7B125; }
-
-  .share-count { font-size: 15px; color: #65676B; }
-
-  .action-bar {
-    display: flex;
-    padding: 4px 8px;
-  }
-
-  .action-btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px;
-    border-radius: 4px;
-    font-size: 15px;
-    font-weight: 600;
-    color: #65676B;
-    cursor: pointer;
-  }
-
-  .action-btn:hover { background: #F2F2F2; }
-  .action-icon { font-size: 18px; }
-
-  /* ── Post 2: Open Day 预告 ── */
-  .img-openday {
-    width: 100%;
-    height: 100%;
-    background: #1C2B3A;
-    display: flex;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .openday-left {
-    flex: 0 0 52%;
-    padding: 32px 28px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-  }
-
-  .openday-left::after {
-    content: '';
-    position: absolute; right: 0; top: 0;
-    width: 4px; height: 100%;
-    background: linear-gradient(180deg, #C8972A, #f0c060, #C8972A);
-  }
-
-  .od-tag { font-size: 10px; color: #C8972A; letter-spacing: 2px; text-transform: uppercase; border: 1px solid rgba(200,151,42,0.4); padding: 4px 10px; border-radius: 3px; width: fit-content; margin-bottom: 12px; }
-  .od-title { font-size: 28px; font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 8px; }
-  .od-sub { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.5; margin-bottom: 16px; }
-
-  .od-details { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-  .od-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.75); }
-  .od-row strong { color: #fff; }
-
-  .od-cta { background: #C8972A; color: #1C2B3A; font-size: 12px; font-weight: 800; padding: 10px 18px; border-radius: 6px; width: fit-content; text-transform: uppercase; letter-spacing: 1px; }
-
-  .openday-right {
-    flex: 1;
-    background: linear-gradient(135deg, rgba(22,37,53,0.55) 0%, rgba(15,30,45,0.55) 100%), url('../图片素材/官网照片/life-at-rhc.avif') center / cover;
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-
-  .openday-right .ring { position: absolute; right: -40px; top: -40px; width: 200px; height: 200px; border-radius: 50%; border: 30px solid rgba(200,151,42,0.06); }
-  .openday-right .photo-hint { font-size: 36px; opacity: 0.25; }
-  .openday-right .badge { position: absolute; bottom: 12px; right: 12px; background: rgba(28,43,58,0.9); border: 1px solid rgba(200,151,42,0.25); border-radius: 8px; padding: 8px 12px; }
-  .openday-right .badge .bn { font-size: 11px; color: #C8972A; font-weight: 700; }
-  .openday-right .badge .bu { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+  .action-bar { display: flex; padding: 4px 0; }
+  .fb-action { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px; font-size: 14px; font-weight: 600; color: #65676b; }
 </style>
 </head>
 <body>
 
 <div class="page-label">📘 Facebook — 发布预览 · Rosehill College</div>
+<div class="batch-tag"><span>第二期 · 2026-04-23</span></div>
 
 <div class="feed">
-
-  <!-- ── Post 1: Mariah Turner ── -->
   <div class="post">
     <div class="post-header">
       <div class="avatar">RC</div>
-      <div class="post-meta">
-        <div class="post-name">Rosehill College</div>
-        <div class="post-time"><span>📅</span>April 22 · 🌐</div>
+      <div>
+        <div class="page-name">Rosehill College</div>
+        <div class="post-meta">April 23 · 🌐</div>
       </div>
       <div class="more-btn">···</div>
     </div>
 
-    <div class="post-text">She left Rosehill in 2012. On April 29, she fights for a WBC World Title. 🥊
-
-Mariah Turner — known in the ring as "The Golden Girl" — is one of ours. A Rosehill College alumna from South Auckland who turned a local passion into a professional career that has taken her around the world.
-
-Her record speaks for itself: 12 wins, 1 loss, 6 knockouts, and now the IBF International Featherweight Title around her waist. Next stop: Melbourne, for a shot at the WBC Interim World Super Bantamweight Title against Skye Nicolson — broadcast live on DAZN and Fox Sports Australia.
-
-We couldn't be prouder.
-
-Mariah's journey is built on the same values we instil in every student: Hihiritanga — the willingness to keep striving, even when it's hard.
-
-Go get it, Mariah. 🇳🇿
-<span class="hashtags">#RosehillCollege #MariahTurner #TheGoldenGirl #WBCTitle #ProBoxing #SouthAuckland #Hihiritanga</span></div>
-
-    <div class="post-image">
-      <div class="img-mariah">
-        <div class="gold-bar"></div>
-        <div class="deco"></div>
-        <div class="school-tag-sm">Rosehill College · Alumni Pride</div>
-        <div class="content">
-          <div class="label-sm">Class of 2012</div>
-          <div class="name">Mariah<br>Turner</div>
-          <div class="nick">"The Golden Girl"</div>
-          <div class="stats">
-            <div class="stat"><div class="num">12-1</div><div class="lbl">Pro Record</div></div>
-            <div class="div"></div>
-            <div class="stat"><div class="num">6</div><div class="lbl">KOs</div></div>
-            <div class="div"></div>
-            <div class="stat"><div class="num">IBF</div><div class="lbl">Champion</div></div>
-          </div>
-          <div class="title-sm">Next: <strong>WBC World Title</strong> · April 29, Melbourne</div>
-          <div class="class-tag">South Auckland · Est. 1970</div>
-        </div>
+    <div class="post-cover">
+      <div class="gold-bar"></div>
+      <div class="cover-content">
+        <div class="cover-eyebrow">International Student Story</div>
+        <div class="cover-title">From Day One,<br>She <span>Belonged.</span></div>
+        <div class="cover-sub">Theana Chen · International Student Leader 2024</div>
       </div>
     </div>
 
-    <div class="engagement">
-      <div class="react-count">
-        <div class="react-icons">
-          <div class="react-icon ri-like">👍</div>
-          <div class="react-icon ri-love">❤️</div>
-          <div class="react-icon ri-wow">😮</div>
-        </div>
-        <span>847</span>
-      </div>
-      <div class="share-count">63 comments · 124 shares</div>
+    <div class="post-body">
+      <p>Meet Theana Chen. 🇳🇿</p>
+      <p>She arrived at Rosehill from China three years ago. On her very first day, a classmate walked over and said hello. She says that's the moment she decided to stay.</p>
+      <p>Three years later, she's Rosehill's International Student Leader for 2024 — now doing for new arrivals exactly what was done for her.</p>
+      <p>This is what school culture actually looks like. Not a values statement on a wall. A cycle of welcome that keeps going, one student at a time.</p>
+      <p>Thinking about New Zealand secondary education for your child? Our International Student Office answers questions in Chinese or English.<br>📍 Papakura, Auckland · ✉️ inquiries@rosehillcollege.school.nz</p>
+      <div class="hashtags">#RosehillCollege #InternationalStudents #StudyInNZ #NewZealandEducation #SouthAuckland #StudentLeader</div>
     </div>
 
+    <div class="reaction-bar">
+      <div class="reactions">❤️ 👍 😮 <span style="margin-left:6px;">1,204</span></div>
+      <div class="counts">87 comments · 312 shares</div>
+    </div>
     <div class="action-bar">
-      <div class="action-btn"><span class="action-icon">👍</span> Like</div>
-      <div class="action-btn"><span class="action-icon">💬</span> Comment</div>
-      <div class="action-btn"><span class="action-icon">↗️</span> Share</div>
+      <div class="fb-action">👍 Like</div>
+      <div class="fb-action">💬 Comment</div>
+      <div class="fb-action">↗️ Share</div>
     </div>
   </div>
-
-  <!-- ── Post 2: Open Day ── -->
-  <div class="post">
-    <div class="post-header">
-      <div class="avatar">RC</div>
-      <div class="post-meta">
-        <div class="post-name">Rosehill College</div>
-        <div class="post-time"><span>📅</span>May 5 · 🌐</div>
-      </div>
-      <div class="more-btn">···</div>
-    </div>
-
-    <div class="post-text">Open doors, open futures. 🏫
-
-Our Term 2 Open Day is on <strong>Saturday, 17 May</strong> — come and experience Rosehill the way our students do every day.
-
-✔ Campus tours led by current students
-✔ Subject information sessions
-✔ International student Q&amp;A (English &amp; Chinese available)
-✔ Afternoon tea with the Principal
-
-Spaces are limited — reserve yours via the link in our bio, or send us a message. 🇳🇿
-<span class="hashtags">#RosehillCollege #OpenDay #NewZealandSchool #InternationalStudents #AucklandSchools</span></div>
-
-    <div class="post-image">
-      <div class="img-openday">
-        <div class="openday-left">
-          <div>
-            <div class="od-tag">Open Day 2025</div>
-            <div class="od-title">Open Our<br>Doors<br>For You</div>
-            <div class="od-sub">All families welcome.<br>No registration required.</div>
-          </div>
-          <div>
-            <div class="od-details">
-              <div class="od-row">📅 <strong>Saturday, 17 May 2025</strong></div>
-              <div class="od-row">🕙 <strong>10:00am – 2:00pm</strong></div>
-              <div class="od-row">📍 Papakura, Auckland</div>
-              <div class="od-row">🆓 Free entry</div>
-            </div>
-            <div class="od-cta">Register Now →</div>
-          </div>
-        </div>
-        <div class="openday-right">
-          <div class="ring"></div>
-          <div class="badge"><div class="bn">Rosehill College</div><div class="bu">rosehillcollege.school.nz</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="engagement">
-      <div class="react-count">
-        <div class="react-icons">
-          <div class="react-icon ri-like">👍</div>
-          <div class="react-icon ri-love">❤️</div>
-        </div>
-        <span>312</span>
-      </div>
-      <div class="share-count">28 comments · 56 shares</div>
-    </div>
-
-    <div class="action-bar">
-      <div class="action-btn"><span class="action-icon">👍</span> Like</div>
-      <div class="action-btn"><span class="action-icon">💬</span> Comment</div>
-      <div class="action-btn"><span class="action-icon">↗️</span> Share</div>
-    </div>
-  </div>
-
-</div><!-- end feed -->
-
-<div style="text-align:center; margin-top: 32px; color: #aaa; font-size: 12px;">
-  图片来源：Rosehill College 官网真实照片
 </div>
 
+<div style="text-align:center;margin-top:32px;color:#aaa;font-size:12px;padding-bottom:32px;">图片由 Signals × WASC 制作 · 2026-04-23</div>
 </body>
 </html>
