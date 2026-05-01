@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rosehill College — 内容预览中心</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d1b2a;
+    font-family: -apple-system, 'Segoe UI', 'PingFang SC', Arial, sans-serif;
+    min-height: 100vh; padding: 0 0 60px;
+    color: #fff;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a3a2a 100%);
+    padding: 48px 40px 40px;
+    border-bottom: 1px solid rgba(200,151,42,0.2);
+    position: relative; overflow: hidden;
+  }
+  .header-ring { position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; border: 48px solid rgba(200,151,42,0.05); }
+  .header-bar { position: absolute; left: 0; top: 0; width: 5px; height: 100%; background: linear-gradient(180deg, #C8972A, #f0c060, #C8972A); }
+  .header-inner { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+  .header-label { font-size: 11px; color: #C8972A; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
+  .header-title { font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 8px; }
+  .header-sub { font-size: 16px; color: rgba(255,255,255,0.45); margin-bottom: 20px; }
+  .header-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+  .badge { background: rgba(200,151,42,0.1); border: 1px solid rgba(200,151,42,0.25); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,0.65); }
+
+  /* Section */
+  .section { max-width: 900px; margin: 40px auto 0; padding: 0 24px; }
+  .section-title {
+    font-size: 13px; color: #C8972A; letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: rgba(200,151,42,0.2); }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+
+  /* Card */
+  .card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; overflow: hidden; text-decoration: none; color: inherit;
+    transition: border-color 0.2s, background 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .card:hover { background: rgba(200,151,42,0.08); border-color: rgba(200,151,42,0.3); }
+  .card-top {
+    padding: 20px 18px 14px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .card-icon { font-size: 28px; flex-shrink: 0; }
+  .card-platform { font-size: 15px; font-weight: 700; color: #fff; }
+  .card-lang { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+  .card-body { padding: 12px 18px 16px; flex: 1; }
+  .card-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+  .card-cta { font-size: 12px; color: #C8972A; margin-top: 10px; font-weight: 600; }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 40px 0 0; }
+
+  /* Footer */
+  .footer { max-width: 900px; margin: 32px auto 0; padding: 0 24px; font-size: 13px; color: rgba(255,255,255,0.25); line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-ring"></div>
+  <div class="header-bar"></div>
+  <div class="header-inner">
+    <div class="header-label">Signals × Rosehill College · Preview Hub</div>
+    <div class="header-title">Rosehill College 内容预览中心</div>
+    <div class="header-sub">多平台发布内容预览 — 供内部审核与客户确认使用</div>
+    <div class="header-badges">
+      <div class="badge">📍 Papakura, Auckland</div>
+      <div class="badge">🎓 Year 9–13 · NCEA</div>
+      <div class="badge">🌍 国际学生友好</div>
+      <div class="badge">🌿 双文化教育</div>
+    </div>
+  </div>
+</div>
+
+<!-- Batch 1: Course Introduction -->
+<div class="section">
+  <div class="section-title">📚 第二批 · 课程介绍 / 特色专业 — May 2026</div>
+  <div class="grid">
+    <a class="card" href="发布预览/Facebook-课程预览.html">
+      <div class="card-top"><div class="card-icon">📘</div><div><div class="card-platform">Facebook</div><div class="card-lang">English · 2 posts</div></div></div>
+      <div class="card-body"><div class="card-desc">表演艺术 &amp; Kapa Haka spotlight + NCEA 学术路径介绍</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/Instagram-课程预览.html">
+      <div class="card-top"><div class="card-icon">📸</div><div><div class="card-platform">Instagram</div><div class="card-lang">English · 2 posts</div></div></div>
+      <div class="card-body"><div class="card-desc">表演艺术方图卡 + NCEA 课程网格图</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/LinkedIn-课程预览.html">
+      <div class="card-top"><div class="card-icon">💼</div><div><div class="card-platform">LinkedIn</div><div class="card-lang">English · Signals视角</div></div></div>
+      <div class="card-body"><div class="card-desc">Why NCEA Works for International Students — 专业视角深度解析</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/小红书-课程预览.html">
+      <div class="card-top"><div class="card-icon">📕</div><div><div class="card-platform">小红书</div><div class="card-lang">中文 · 种草笔记</div></div></div>
+      <div class="card-body"><div class="card-desc">「新西兰中学到底能学哪些特色课？」手机预览含封面图</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/微信公众号-课程预览.html">
+      <div class="card-top"><div class="card-icon">💚</div><div><div class="card-platform">微信公众号</div><div class="card-lang">中文 · 深度文章</div></div></div>
+      <div class="card-body"><div class="card-desc">课程深度解析长文，含课程表格与特色项目介绍</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/Blog-课程预览.html">
+      <div class="card-top"><div class="card-icon">✍️</div><div><div class="card-platform">Blog</div><div class="card-lang">English · SEO优化</div></div></div>
+      <div class="card-body"><div class="card-desc">A Complete Guide to Rosehill Courses — 官网博客格式，含SEO结构</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/LINE-课程预览.html">
+      <div class="card-top"><div class="card-icon">💬</div><div><div class="card-platform">LINE</div><div class="card-lang">English + 中文</div></div></div>
+      <div class="card-body"><div class="card-desc">聊天气泡格式，含课程卡片图文消息</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/Naver-课程预览.html">
+      <div class="card-top"><div class="card-icon">🟢</div><div><div class="card-platform">Naver 블로그</div><div class="card-lang">한국어 + English</div></div></div>
+      <div class="card-body"><div class="card-desc">뉴질랜드 중학교 커리큘럼 완벽 정리 — 한국어 + 영문 요약</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+  </div>
+</div>
+
+<!-- Batch 1: Original -->
+<div class="section" style="margin-top: 32px;">
+  <div class="section-title">📂 第一批 · Open Day &amp; 校园生活 — April 2026</div>
+  <div class="grid">
+    <a class="card" href="发布预览/Facebook预览.html">
+      <div class="card-top"><div class="card-icon">📘</div><div><div class="card-platform">Facebook</div><div class="card-lang">English · 2 posts</div></div></div>
+      <div class="card-body"><div class="card-desc">Mariah Turner 校友故事 + Open Day 预告</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/Instagram预览.html">
+      <div class="card-top"><div class="card-icon">📸</div><div><div class="card-platform">Instagram</div><div class="card-lang">English · 2 posts</div></div></div>
+      <div class="card-body"><div class="card-desc">拳击冠军校友卡 + 校园文化图</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/LinkedIn预览.html">
+      <div class="card-top"><div class="card-icon">💼</div><div><div class="card-platform">LinkedIn</div><div class="card-lang">English · Signals视角</div></div></div>
+      <div class="card-body"><div class="card-desc">双文化教育优势 — 机构视角深度分析</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/小红书预览.html">
+      <div class="card-top"><div class="card-icon">📕</div><div><div class="card-platform">小红书</div><div class="card-lang">中文 · 学生故事</div></div></div>
+      <div class="card-body"><div class="card-desc">Theana Chen 留学故事 — 国际学生领袖</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/微信公众号预览.html">
+      <div class="card-top"><div class="card-icon">💚</div><div><div class="card-platform">微信公众号</div><div class="card-lang">中文 · 校友故事</div></div></div>
+      <div class="card-body"><div class="card-desc">Mariah Turner 拳击世界冠军挑战者故事</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/Blog预览.html">
+      <div class="card-top"><div class="card-icon">✍️</div><div><div class="card-platform">Blog</div><div class="card-lang">English · SEO+GEO</div></div></div>
+      <div class="card-body"><div class="card-desc">校园生活与双文化特色 SEO 长文</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/LINE预览.html">
+      <div class="card-top"><div class="card-icon">💬</div><div><div class="card-platform">LINE</div><div class="card-lang">English + 中文</div></div></div>
+      <div class="card-body"><div class="card-desc">Open Day 通知消息格式</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+    <a class="card" href="发布预览/Naver블로그预览.html">
+      <div class="card-top"><div class="card-icon">🟢</div><div><div class="card-platform">Naver 블로그</div><div class="card-lang">한국어 + English</div></div></div>
+      <div class="card-body"><div class="card-desc">校园介绍与 Open Day 韩文 + 英文版</div><div class="card-cta">查看预览 →</div></div>
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Produced by Signals for Rosehill College · rosehillcollege.school.nz · inquiries@rosehillcollege.school.nz</p>
+  <p style="margin-top:6px">This page is for internal review and client approval. Content is subject to revision before publication.</p>
+</div>
+
+</body>
+</html>

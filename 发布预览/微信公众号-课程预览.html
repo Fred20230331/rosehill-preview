@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微信公众号 课程预览 — Rosehill College</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #ededed; font-family: -apple-system,'PingFang SC','Noto Sans SC','Microsoft YaHei',Arial,sans-serif; padding: 32px 0 60px; -webkit-font-smoothing: antialiased; }
+  .page-label { text-align: center; color: #888; font-size: 13px; letter-spacing: 2px; margin-bottom: 20px; }
+  .phone-shell { width: 390px; margin: 0 auto; background: #fff; border-radius: 40px; box-shadow: 0 24px 80px rgba(0,0,0,0.18); overflow: hidden; }
+  .status-bar { background: #fff; padding: 14px 24px 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; color: #000; }
+  .wechat-nav { background: #f7f7f7; border-bottom: 1px solid #e5e5e5; padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
+  .nav-back { font-size: 22px; color: #000; }
+  .nav-title { flex: 1; text-align: center; font-size: 17px; font-weight: 600; color: #000; }
+  .nav-more { font-size: 22px; color: #000; letter-spacing: -1px; }
+  .article { background: #fff; overflow-y: auto; max-height: 720px; }
+
+  /* 封面 */
+  .cover-img {
+    width: 100%; aspect-ratio: 2.35/1;
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a3a2a 60%, #0d2218 100%);
+    position: relative; overflow: hidden; display: flex; align-items: flex-end;
+  }
+  .cover-ring { position: absolute; top: -40px; right: -40px; width: 240px; height: 240px; border-radius: 50%; border: 40px solid rgba(200,151,42,0.06); }
+  .cover-bar { position: absolute; left: 0; top: 0; width: 5px; height: 100%; background: linear-gradient(180deg, #C8972A, #f0c060, #C8972A); }
+  .cover-inner { position: relative; z-index: 2; padding: 20px 24px; width: 100%; display: flex; align-items: flex-end; justify-content: space-between; }
+  .cover-text .cover-label { font-size: 10px; color: #C8972A; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .cover-text .cover-h { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.2; }
+  .cover-text .cover-s { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+  .cover-icons { display: flex; gap: 8px; font-size: 22px; opacity: 0.6; }
+
+  /* 发布者 */
+  .mp-author { padding: 16px 16px 0; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f5f5f5; padding-bottom: 14px; margin-bottom: 4px; }
+  .mp-avatar { width: 40px; height: 40px; border-radius: 50%; background: #1C2B3A; display: flex; align-items: center; justify-content: center; color: #C8972A; font-weight: 800; font-size: 14px; flex-shrink: 0; }
+  .mp-info { flex: 1; }
+  .mp-name { font-size: 15px; font-weight: 600; color: #333; }
+  .mp-time { font-size: 12px; color: #999; margin-top: 2px; }
+  .mp-follow { font-size: 13px; color: #07c160; font-weight: 600; }
+
+  /* 文章内容 */
+  .article-body { padding: 20px 20px 0; }
+  .art-title { font-size: 20px; font-weight: 700; color: #1a1a1a; line-height: 1.35; margin-bottom: 8px; }
+  .art-sub { font-size: 13px; color: #999; margin-bottom: 20px; line-height: 1.5; padding-bottom: 16px; border-bottom: 1px solid #f5f5f5; }
+  .art-body { font-size: 16px; color: #333; line-height: 2; }
+  .art-body p { margin-bottom: 16px; }
+  .art-body h2 { font-size: 17px; font-weight: 700; color: #1a1a1a; margin: 24px 0 12px; padding-left: 10px; border-left: 3px solid #C8972A; }
+  .art-body .highlight { background: rgba(200,151,42,0.12); color: #8a6512; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+  .art-body .quote { background: #f9f7f2; border-left: 3px solid #C8972A; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 14px 0; font-size: 15px; color: #555; line-height: 1.8; }
+  .art-body .subject-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0; }
+  .art-body .subject-box { background: #f8f8f8; border-radius: 10px; padding: 12px; text-align: center; }
+  .art-body .subject-box .sb-icon { font-size: 24px; margin-bottom: 4px; }
+  .art-body .subject-box .sb-name { font-size: 13px; font-weight: 700; color: #333; }
+  .art-body .subject-box .sb-desc { font-size: 11px; color: #999; margin-top: 2px; }
+  .art-body .ncea-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  .art-body .ncea-table th { background: #1C2B3A; color: #C8972A; padding: 10px 12px; text-align: left; font-weight: 700; }
+  .art-body .ncea-table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; color: #333; }
+  .art-body .ncea-table tr:last-child td { border-bottom: none; }
+  .art-body .info-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+  .art-body .info-row .icon { font-size: 20px; flex-shrink: 0; }
+  .art-body .info-row .text strong { color: #1a1a1a; }
+  .art-body .info-row .text { font-size: 15px; color: #444; line-height: 1.6; }
+  .art-body .contact-box { background: #f3f9f5; border: 1px solid #c3e6cb; border-radius: 10px; padding: 16px; margin: 20px 0; }
+  .art-body .contact-box .ct { font-size: 14px; color: #333; line-height: 1.9; }
+  .art-body .contact-box .ct strong { color: #07c160; }
+
+  /* 底部 */
+  .article-footer { padding: 20px; border-top: 1px solid #f5f5f5; display: flex; justify-content: space-around; }
+  .foot-action { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 12px; color: #999; }
+  .foot-action .fa-icon { font-size: 24px; }
+</style>
+</head>
+<body>
+
+<div class="page-label">💚 微信公众号 · 课程介绍 — Rosehill College</div>
+
+<div class="phone-shell">
+  <div class="status-bar"><span>9:41</span><span>●●● 🔋</span></div>
+  <div class="wechat-nav">
+    <div class="nav-back">‹</div>
+    <div class="nav-title">Rosehill College</div>
+    <div class="nav-more">···</div>
+  </div>
+
+  <div class="article">
+    <div class="cover-img">
+      <div class="cover-ring"></div>
+      <div class="cover-bar"></div>
+      <div class="cover-inner">
+        <div class="cover-text">
+          <div class="cover-label">Curriculum Guide · 2026</div>
+          <div class="cover-h">新西兰中学课程<br>深度解析</div>
+          <div class="cover-s">从表演艺术到 NCEA 学术路径</div>
+        </div>
+        <div class="cover-icons">🎭🌿🎓</div>
+      </div>
+    </div>
+
+    <div class="mp-author">
+      <div class="mp-avatar">RC</div>
+      <div class="mp-info">
+        <div class="mp-name">Rosehill College 官方</div>
+        <div class="mp-time">2026年5月1日</div>
+      </div>
+      <div class="mp-follow">+ 关注</div>
+    </div>
+
+    <div class="article-body">
+      <div class="art-title">新西兰中学课程深度解析：Rosehill College 能给孩子什么？</div>
+      <div class="art-sub">从表演艺术到 NCEA 学术路径，一所奥克兰南部公立学校的完整课程图谱</div>
+
+      <div class="art-body">
+        <p>很多计划送孩子来新西兰读书的家长，在选校阶段都会问一个核心问题：</p>
+        <p><span class="highlight">这所学校，到底能让我的孩子学到什么？</span></p>
+        <p>今天我们以 Rosehill College 为例，把课程体系拆开来讲清楚。</p>
+
+        <h2>一、理解 NCEA：新西兰的资质框架</h2>
+        <p>NCEA 是学分制，全年多次评估积累，没有一考定终身的压力：</p>
+        <table class="ncea-table">
+          <tr><th>年级</th><th>NCEA Level</th><th>说明</th></tr>
+          <tr><td>Year 11</td><td>Level 1</td><td>基础学业确认</td></tr>
+          <tr><td>Year 12</td><td>Level 2</td><td>方向深化</td></tr>
+          <tr><td>Year 13</td><td>Level 3</td><td>大学申请资格</td></tr>
+        </table>
+        <p>NCEA Level 3 被新西兰、澳大利亚、英国、加拿大各主要大学广泛承认。</p>
+
+        <h2>二、Year 9–10：宽基础，找方向</h2>
+        <div class="subject-grid">
+          <div class="subject-box"><div class="sb-icon">📖</div><div class="sb-name">英语</div><div class="sb-desc">写作·阅读·口语</div></div>
+          <div class="subject-box"><div class="sb-icon">📐</div><div class="sb-name">数学</div><div class="sb-desc">代数·几何·统计</div></div>
+          <div class="subject-box"><div class="sb-icon">🔬</div><div class="sb-name">科学</div><div class="sb-desc">物·化·生·地</div></div>
+          <div class="subject-box"><div class="sb-icon">🌍</div><div class="sb-name">社会研究</div><div class="sb-desc">历史·地理·经济</div></div>
+          <div class="subject-box"><div class="sb-icon">💻</div><div class="sb-name">科技</div><div class="sb-desc">设计·编程</div></div>
+          <div class="subject-box"><div class="sb-icon">🎭</div><div class="sb-name">表演艺术</div><div class="sb-desc">音乐·舞蹈·戏剧</div></div>
+        </div>
+
+        <h2>三、Rosehill 的特色项目</h2>
+        <div class="quote">
+          🎭 <strong>表演艺术</strong><br>
+          戏剧、音乐、舞蹈、视觉艺术，全部延伸至 NCEA Level 3。<br>
+          2000年，时任总理 Helen Clark 亲自为学校表演艺术设施揭幕。
+        </div>
+        <div class="quote">
+          🌿 <strong>Kapa Haka — 毛利传统表演</strong><br>
+          学校竞技队曾在 Polyfest 获奖。<br>
+          这不是表演秀，是毛利语言、历史和文化的活体传承。<br>
+          留学生参与其中，往往说这是整个留学生涯中最意想不到的收获。
+        </div>
+
+        <h2>四、国际生支持</h2>
+        <div class="info-row"><div class="icon">📚</div><div class="text"><strong>英语语言支持（ELS）</strong><br>专为英语非母语学生设置，与主流课程并行</div></div>
+        <div class="info-row"><div class="icon">🏠</div><div class="text"><strong>寄宿家庭安排</strong><br>学校审核管理，可提前沟通偏好</div></div>
+        <div class="info-row"><div class="icon">🛡</div><div class="text"><strong>符合新西兰《2021年教育关怀法规》</strong><br>专职国际学生办公室全程跟进</div></div>
+
+        <div class="contact-box">
+          <div class="ct">
+            📮 <strong>邮箱</strong>：inquiries@rosehillcollege.school.nz<br>
+            📞 <strong>电话</strong>：+64 9 295 0661<br>
+            🌐 <strong>官网</strong>：rosehillcollege.school.nz<br>
+            📍 5 Edinburgh Avenue, Papakura, Auckland 2113
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-footer">
+      <div class="foot-action"><div class="fa-icon">👍</div><div>1,204</div></div>
+      <div class="foot-action"><div class="fa-icon">⭐</div><div>收藏</div></div>
+      <div class="foot-action"><div class="fa-icon">💬</div><div>评论</div></div>
+      <div class="foot-action"><div class="fa-icon">↗️</div><div>分享</div></div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center; margin-top:32px; color:#aaa; font-size:12px; padding-bottom:32px;">
+  课程介绍批次 · Rosehill College · May 2026
+</div>
+</body>
+</html>

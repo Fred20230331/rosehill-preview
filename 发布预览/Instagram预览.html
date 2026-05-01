@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Instagram 发布预览 — Rosehill College</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #fafafa;
+    font-family: -apple-system, 'Segoe UI', Arial, sans-serif;
+    padding: 32px 0;
+  }
+
+  .page-label {
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .feed { max-width: 470px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+  /* ── Post card ── */
+  .post { background: #fff; border: 1px solid #dbdbdb; border-radius: 3px; }
+
+  /* Header */
+  .post-header { display: flex; align-items: center; padding: 14px 16px; gap: 12px; }
+
+  .avatar-ring {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    padding: 2px; flex-shrink: 0;
+  }
+  .avatar-inner {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: #1C2B3A;
+    display: flex; align-items: center; justify-content: center;
+    color: #C8972A; font-weight: 800; font-size: 13px;
+    border: 2px solid #fff;
+  }
+
+  .post-username { flex: 1; font-weight: 600; font-size: 14px; color: #262626; }
+  .follow-btn { font-size: 14px; font-weight: 600; color: #0095f6; cursor: pointer; }
+  .more-btn { color: #262626; font-size: 18px; margin-left: 12px; cursor: pointer; }
+
+  /* Image */
+  .post-image { width: 100%; position: relative; }
+
+  /* Post 1: Mariah Turner — 1:1 */
+  .img-mariah {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: linear-gradient(to bottom, rgba(13,27,42,0.28) 0%, rgba(13,27,42,0.88) 58%), url('../图片素材/官网照片/mariah-turner.png') center top / cover;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+
+  .img-mariah .gold-bar { position: absolute; left: 0; top: 0; width: 5px; height: 100%; background: linear-gradient(180deg, #C8972A, #f0c060, #C8972A); }
+  .img-mariah .deco { position: absolute; right: -50px; top: 50%; transform: translateY(-50%); width: 260px; height: 260px; border-radius: 50%; border: 36px solid rgba(200,151,42,0.06); }
+  .img-mariah .school-sm { position: absolute; top: 18px; left: 18px; color: #C8972A; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+
+  .img-mariah .content { position: relative; z-index: 2; padding: 0 20px 20px 24px; }
+  .img-mariah .lbl { font-size: 10px; color: #C8972A; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; }
+  .img-mariah .name { font-size: 40px; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 3px; }
+  .img-mariah .nick { font-size: 15px; color: #C8972A; font-style: italic; margin-bottom: 20px; }
+
+  .img-mariah .stats { display: flex; gap: 20px; margin-bottom: 16px; }
+  .img-mariah .stat .num { font-size: 28px; font-weight: 800; color: #fff; line-height: 1; }
+  .img-mariah .stat .lbl2 { font-size: 10px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .img-mariah .div2 { width: 1px; height: 34px; background: rgba(200,151,42,0.3); align-self: center; }
+
+  .img-mariah .sub { font-size: 11px; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+  .img-mariah .sub strong { color: #C8972A; }
+  .img-mariah .chip { display: inline-block; font-size: 10px; color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.12); padding: 3px 10px; border-radius: 20px; }
+
+  /* Post 2: Campus culture — 4:5 */
+  .img-campus {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: url('../图片素材/官网照片/life-at-rhc.avif') center / cover;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+
+  .img-campus .overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.6) 100%); }
+
+  .img-campus .deco-ring { position: absolute; top: -30px; right: -30px; width: 200px; height: 200px; border-radius: 50%; border: 2px solid rgba(200,151,42,0.2); }
+
+  .img-campus .photo-hint { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-60%); font-size: 60px; opacity: 0.15; }
+
+  .img-campus .content { position: relative; z-index: 2; padding: 0 24px 28px; }
+  .img-campus .quote { font-size: 22px; font-weight: 700; color: #fff; line-height: 1.4; margin-bottom: 12px; }
+  .img-campus .quote span { color: #C8972A; }
+  .img-campus .attr { font-size: 13px; color: rgba(255,255,255,0.5); display: flex; align-items: center; gap: 8px; }
+  .img-campus .attr::before { content: ''; display: block; width: 24px; height: 1px; background: #C8972A; }
+
+  /* Action icons */
+  .post-actions { display: flex; align-items: center; padding: 8px 16px 4px; gap: 4px; }
+  .action-icon { font-size: 24px; cursor: pointer; padding: 4px; }
+  .bookmark { margin-left: auto; }
+
+  .likes { padding: 0 16px 4px; font-weight: 600; font-size: 14px; color: #262626; }
+
+  .caption {
+    padding: 0 16px 8px;
+    font-size: 14px; color: #262626; line-height: 1.5;
+  }
+  .caption .username { font-weight: 600; margin-right: 4px; }
+  .caption .hashtags { color: #00376b; margin-top: 6px; display: block; font-size: 13px; line-height: 1.8; }
+  .caption .more { color: #8e8e8e; font-size: 14px; }
+
+  .view-comments { padding: 0 16px 4px; font-size: 14px; color: #8e8e8e; cursor: pointer; }
+
+  .comment-input { display: flex; align-items: center; padding: 8px 16px 12px; gap: 12px; border-top: 1px solid #efefef; margin-top: 4px; }
+  .commenter-avatar { width: 28px; height: 28px; border-radius: 50%; background: #dbdbdb; flex-shrink: 0; }
+  .comment-placeholder { font-size: 14px; color: #8e8e8e; flex: 1; }
+  .post-btn { font-size: 14px; font-weight: 600; color: #0095f6; }
+
+  .timestamp { padding: 0 16px 12px; font-size: 10px; color: #8e8e8e; text-transform: uppercase; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<div class="page-label">📸 Instagram — 发布预览 · Rosehill College</div>
+
+<div class="feed">
+
+  <!-- ── Post 1: Mariah Turner ── -->
+  <div class="post">
+    <div class="post-header">
+      <div class="avatar-ring">
+        <div class="avatar-inner">RC</div>
+      </div>
+      <div class="post-username">rosehillcollege</div>
+      <div class="follow-btn">Follow</div>
+      <div class="more-btn">⋯</div>
+    </div>
+
+    <div class="post-image">
+      <div class="img-mariah">
+        <div class="gold-bar"></div>
+        <div class="deco"></div>
+        <div class="school-sm">Rosehill College · Alumni Pride</div>
+        <div class="content">
+          <div class="lbl">Class of 2012</div>
+          <div class="name">Mariah<br>Turner</div>
+          <div class="nick">"The Golden Girl"</div>
+          <div class="stats">
+            <div class="stat"><div class="num">12-1</div><div class="lbl2">Pro Record</div></div>
+            <div class="div2"></div>
+            <div class="stat"><div class="num">6</div><div class="lbl2">KOs</div></div>
+            <div class="div2"></div>
+            <div class="stat"><div class="num">IBF</div><div class="lbl2">Champion</div></div>
+          </div>
+          <div class="sub">Next: <strong>WBC World Title</strong> · April 29, Melbourne</div>
+          <div class="chip">South Auckland · Est. 1970</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-actions">
+      <span class="action-icon">🤍</span>
+      <span class="action-icon">💬</span>
+      <span class="action-icon">✈️</span>
+      <span class="action-icon bookmark">🔖</span>
+    </div>
+    <div class="likes">2,341 likes</div>
+    <div class="caption">
+      <span class="username">rosehillcollege</span>
+      She left Rosehill in 2012. On April 29, she fights for a world title. 🥊 Mariah Turner — Class of 2012, South Auckland local, now a professional boxer with a 12-1 record and the IBF International Featherweight belt. Next stop: Melbourne. WBC World Title. Global broadcast. We always knew she had it. 🖤🇳🇿
+      <span class="hashtags">#RosehillCollege #MariahTurner #TheGoldenGirl #Hihiritanga #SouthAuckland #NZBoxing #AlumniPride #WBCTitle #ProBoxing #NewZealand #Papakura #FromHereToEverywhere</span>
+    </div>
+    <div class="view-comments">View all 186 comments</div>
+    <div class="timestamp">April 22</div>
+    <div class="comment-input">
+      <div class="commenter-avatar"></div>
+      <div class="comment-placeholder">Add a comment…</div>
+      <div class="post-btn">Post</div>
+    </div>
+  </div>
+
+  <!-- ── Post 2: Campus Culture ── -->
+  <div class="post">
+    <div class="post-header">
+      <div class="avatar-ring">
+        <div class="avatar-inner">RC</div>
+      </div>
+      <div class="post-username">rosehillcollege</div>
+      <div class="follow-btn">Follow</div>
+      <div class="more-btn">⋯</div>
+    </div>
+
+    <div class="post-image">
+      <div class="img-campus">
+        <div class="overlay"></div>
+        <div class="deco-ring"></div>
+        <div class="content">
+          <div class="quote">"Not every classroom<br>has four walls."<br><span>Still going. Still growing.</span></div>
+          <div class="attr">Rosehill College, Papakura · Since 1970</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-actions">
+      <span class="action-icon">🤍</span>
+      <span class="action-icon">💬</span>
+      <span class="action-icon">✈️</span>
+      <span class="action-icon bookmark">🔖</span>
+    </div>
+    <div class="likes">1,087 likes</div>
+    <div class="caption">
+      <span class="username">rosehillcollege</span>
+      Not every classroom has four walls. 🌿 At Rosehill, education happens in the drama studio, on the sports field, in the Kapa Haka rehearsal, and in the quiet moment a Year 9 student figures out they're good at something they never expected. We've been building this community since 1970. Still going. Still growing.
+      <span class="hashtags">#RosehillCollege #Papakura #KapaHaka #NZEducation #BiculturalEducation #SchoolLife #Manaakitanga #StudyInNZ #SouthAuckland</span>
+    </div>
+    <div class="view-comments">View all 74 comments</div>
+    <div class="timestamp">April 16</div>
+    <div class="comment-input">
+      <div class="commenter-avatar"></div>
+      <div class="comment-placeholder">Add a comment…</div>
+      <div class="post-btn">Post</div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center; margin-top: 32px; color: #aaa; font-size: 12px; padding-bottom: 32px;">
+  图片来源：Rosehill College 官网真实照片
+</div>
+
+</body>
+</html>

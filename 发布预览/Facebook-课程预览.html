@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Facebook 课程预览 — Rosehill College</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f0f2f5;
+    font-family: -apple-system, 'Segoe UI', Arial, sans-serif;
+    padding: 32px 0;
+    min-height: 100vh;
+  }
+  .page-label {
+    text-align: center; color: #888; font-size: 13px;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px;
+  }
+  .feed { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+  .post { background: #fff; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); overflow: hidden; }
+  .post-header { display: flex; align-items: center; padding: 12px 16px; gap: 10px; }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: #1C2B3A; display: flex; align-items: center; justify-content: center;
+    color: #C8972A; font-weight: 800; font-size: 16px; flex-shrink: 0;
+  }
+  .post-meta { flex: 1; }
+  .post-name { font-weight: 700; font-size: 15px; color: #050505; }
+  .post-time { font-size: 13px; color: #65676B; margin-top: 1px; }
+  .more-btn { color: #65676B; font-size: 20px; padding: 4px 8px; }
+  .post-text { padding: 0 16px 12px; font-size: 15px; color: #050505; line-height: 1.6; white-space: pre-line; }
+  .post-text .hashtags { color: #1877F2; font-size: 14px; margin-top: 8px; display: block; line-height: 1.8; }
+  .post-image { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; }
+
+  /* ── Card 1: Performing Arts & Kapa Haka ── */
+  .img-arts {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a3a2a 60%, #0d2b1a 100%);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .arts-deco-ring {
+    position: absolute; top: -60px; right: -60px;
+    width: 320px; height: 320px; border-radius: 50%;
+    border: 48px solid rgba(200,151,42,0.06);
+  }
+  .arts-deco-ring2 {
+    position: absolute; bottom: -40px; left: -40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    border: 28px solid rgba(255,255,255,0.03);
+  }
+  .arts-gold-bar {
+    position: absolute; left: 0; top: 0; width: 5px; height: 100%;
+    background: linear-gradient(180deg, #C8972A, #f0c060, #C8972A);
+  }
+  .arts-school-tag {
+    position: absolute; top: 24px; left: 20px;
+    color: #C8972A; font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; font-weight: 600;
+  }
+  .arts-emoji-cluster {
+    position: absolute; top: 20px; right: 24px;
+    display: flex; flex-direction: column; gap: 10px; align-items: center;
+  }
+  .arts-emoji { font-size: 28px; opacity: 0.7; }
+  .arts-content { position: relative; z-index: 2; padding: 0 24px 28px 28px; }
+  .arts-label { font-size: 11px; color: #C8972A; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; }
+  .arts-title { font-size: 38px; font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 6px; }
+  .arts-title .hl { color: #C8972A; }
+  .arts-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 20px; line-height: 1.5; }
+  .arts-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .arts-pill {
+    background: rgba(200,151,42,0.12); border: 1px solid rgba(200,151,42,0.25);
+    border-radius: 20px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,0.75);
+  }
+  .arts-footer { display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 14px; }
+  .arts-footer-name { font-size: 13px; font-weight: 700; color: #C8972A; }
+  .arts-footer-loc { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+  .arts-badge { font-size: 11px; color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 4px 12px; border-radius: 20px; }
+
+  /* ── Card 2: NCEA Pathway ── */
+  .img-ncea {
+    width: 100%; height: 100%;
+    background: #1C2B3A;
+    position: relative; overflow: hidden;
+    display: flex;
+  }
+  .ncea-left {
+    flex: 0 0 50%; padding: 28px 24px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    border-right: 4px solid;
+    border-image: linear-gradient(180deg, #C8972A, #f0c060, #C8972A) 1;
+    position: relative;
+  }
+  .ncea-tag { font-size: 10px; color: #C8972A; letter-spacing: 2px; text-transform: uppercase; border: 1px solid rgba(200,151,42,0.35); padding: 4px 10px; border-radius: 3px; width: fit-content; margin-bottom: 14px; }
+  .ncea-title { font-size: 26px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 8px; }
+  .ncea-sub { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; margin-bottom: 20px; }
+  .ncea-levels { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .ncea-row { display: flex; align-items: center; gap: 10px; }
+  .ncea-badge-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(200,151,42,0.15); border: 1px solid rgba(200,151,42,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: #C8972A; flex-shrink: 0;
+  }
+  .ncea-row-text .yn { font-size: 11px; color: rgba(255,255,255,0.4); }
+  .ncea-row-text .lt { font-size: 13px; font-weight: 700; color: #fff; }
+  .ncea-cta { background: #C8972A; color: #1C2B3A; font-size: 11px; font-weight: 800; padding: 10px 16px; border-radius: 6px; text-transform: uppercase; letter-spacing: 1px; width: fit-content; }
+  .ncea-right {
+    flex: 1; padding: 28px 20px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .ncea-subjects-title { font-size: 11px; color: #C8972A; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .ncea-subjects { display: flex; flex-direction: column; gap: 10px; }
+  .ncea-subject-row { display: flex; align-items: center; gap: 8px; }
+  .ncea-subject-icon { font-size: 16px; flex-shrink: 0; }
+  .ncea-subject-name { font-size: 13px; color: rgba(255,255,255,0.75); }
+  .ncea-globe { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 16px; }
+
+  /* Engagement */
+  .engagement { padding: 4px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E4E6EB; }
+  .react-count { display: flex; align-items: center; gap: 6px; font-size: 15px; color: #65676B; }
+  .react-icons { display: flex; }
+  .react-icon { width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 11px; margin-left: -4px; }
+  .react-icon:first-child { margin-left: 0; }
+  .ri-like { background: #1877F2; } .ri-love { background: #F33E58; }
+  .share-count { font-size: 15px; color: #65676B; }
+  .action-bar { display: flex; padding: 4px 8px; }
+  .action-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px; border-radius: 4px; font-size: 15px; font-weight: 600; color: #65676B; cursor: pointer; }
+  .action-btn:hover { background: #F2F2F2; }
+</style>
+</head>
+<body>
+
+<div class="page-label">📘 Facebook · 课程介绍 — Rosehill College</div>
+
+<div class="feed">
+
+  <!-- Post 1: Performing Arts & Kapa Haka -->
+  <div class="post">
+    <div class="post-header">
+      <div class="avatar">RC</div>
+      <div class="post-meta">
+        <div class="post-name">Rosehill College</div>
+        <div class="post-time">📅 May 1 · 🌐</div>
+      </div>
+      <div class="more-btn">···</div>
+    </div>
+    <div class="post-text">Not all classrooms have four walls. 🎭
+
+At Rosehill College, some of the most powerful learning happens on stage — through Drama, Dance, Music, and our award-winning Kapa Haka programme.
+
+Kapa Haka isn't just performance. It's language, history, identity, and belonging — all woven together. Our group has competed at Polyfest and brought home recognition that the whole school celebrates.
+
+For students who thrive in the creative arts, Rosehill offers a full pathway from Year 9 through to NCEA Level 3.
+
+✔ Drama &amp; Theatre Productions
+✔ Classical and Contemporary Music
+✔ Dance (including Pacific styles)
+✔ Kapa Haka — Māori cultural performance
+✔ Visual Arts
+
+This is education that stays with you.
+<span class="hashtags">#RosehillCollege #PerformingArts #KapaHaka #NewZealandSchool #AucklandArts #NZEducation #MāoriCulture #Polyfest</span></div>
+
+    <div class="post-image">
+      <div class="img-arts">
+        <div class="arts-deco-ring"></div>
+        <div class="arts-deco-ring2"></div>
+        <div class="arts-gold-bar"></div>
+        <div class="arts-school-tag">Rosehill College · Signature Programmes</div>
+        <div class="arts-emoji-cluster">
+          <div class="arts-emoji">🎭</div>
+          <div class="arts-emoji">🎵</div>
+          <div class="arts-emoji">💃</div>
+          <div class="arts-emoji">🌿</div>
+        </div>
+        <div class="arts-content">
+          <div class="arts-label">Performing Arts & Kapa Haka</div>
+          <div class="arts-title">Learn<br>Beyond<br>the <span class="hl">Stage</span></div>
+          <div class="arts-sub">Drama · Music · Dance · Visual Arts<br>Māori cultural performance since 1996</div>
+          <div class="arts-pills">
+            <div class="arts-pill">🏆 Polyfest Winners</div>
+            <div class="arts-pill">🎓 NCEA Level 1–3</div>
+            <div class="arts-pill">📍 Papakura, Auckland</div>
+          </div>
+          <div class="arts-footer">
+            <div>
+              <div class="arts-footer-name">Rosehill College</div>
+              <div class="arts-footer-loc">South Auckland · Est. 1970</div>
+            </div>
+            <div class="arts-badge">rosehillcollege.school.nz</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="engagement">
+      <div class="react-count">
+        <div class="react-icons">
+          <div class="react-icon ri-like">👍</div>
+          <div class="react-icon ri-love">❤️</div>
+        </div>
+        <span>524</span>
+      </div>
+      <div class="share-count">41 comments · 88 shares</div>
+    </div>
+    <div class="action-bar">
+      <div class="action-btn"><span>👍</span> Like</div>
+      <div class="action-btn"><span>💬</span> Comment</div>
+      <div class="action-btn"><span>↗️</span> Share</div>
+    </div>
+  </div>
+
+  <!-- Post 2: NCEA Pathway -->
+  <div class="post">
+    <div class="post-header">
+      <div class="avatar">RC</div>
+      <div class="post-meta">
+        <div class="post-name">Rosehill College</div>
+        <div class="post-time">📅 May 8 · 🌐</div>
+      </div>
+      <div class="more-btn">···</div>
+    </div>
+    <div class="post-text">Year 9 to Year 13. One school. A future that's yours to build. 🎓
+
+Rosehill College offers a comprehensive academic programme through New Zealand's internationally recognised NCEA qualification.
+
+📚 Year 9–10: English · Maths · Sciences · Arts · Languages · Tech · Sport
+🎓 Year 11: NCEA Level 1
+🎓 Year 12: NCEA Level 2
+🎓 Year 13: NCEA Level 3 → university pathways in NZ, AU, UK &amp; beyond
+
+We also offer dedicated English Language Support for international students — because thriving academically starts with confidence in the classroom.
+
+📩 rosehillcollege.school.nz
+<span class="hashtags">#RosehillCollege #NCEA #NewZealandSchool #InternationalStudents #AucklandSchools #NZEducation</span></div>
+
+    <div class="post-image">
+      <div class="img-ncea">
+        <div class="ncea-left">
+          <div>
+            <div class="ncea-tag">Academic Pathway</div>
+            <div class="ncea-title">Your Path<br>to University<br>Starts Here</div>
+            <div class="ncea-sub">Credit-based. Internationally<br>recognised. No single exam.</div>
+          </div>
+          <div>
+            <div class="ncea-levels">
+              <div class="ncea-row">
+                <div class="ncea-badge-num">1</div>
+                <div class="ncea-row-text"><div class="yn">Year 11</div><div class="lt">NCEA Level 1</div></div>
+              </div>
+              <div class="ncea-row">
+                <div class="ncea-badge-num">2</div>
+                <div class="ncea-row-text"><div class="yn">Year 12</div><div class="lt">NCEA Level 2</div></div>
+              </div>
+              <div class="ncea-row">
+                <div class="ncea-badge-num">3</div>
+                <div class="ncea-row-text"><div class="yn">Year 13</div><div class="lt">NCEA Level 3</div></div>
+              </div>
+            </div>
+            <div class="ncea-cta">Enrol Now →</div>
+          </div>
+        </div>
+        <div class="ncea-right">
+          <div>
+            <div class="ncea-subjects-title">Subjects Offered</div>
+            <div class="ncea-subjects">
+              <div class="ncea-subject-row"><div class="ncea-subject-icon">📐</div><div class="ncea-subject-name">Mathematics</div></div>
+              <div class="ncea-subject-row"><div class="ncea-subject-icon">🔬</div><div class="ncea-subject-name">Sciences</div></div>
+              <div class="ncea-subject-row"><div class="ncea-subject-icon">📖</div><div class="ncea-subject-name">English</div></div>
+              <div class="ncea-subject-row"><div class="ncea-subject-icon">🌍</div><div class="ncea-subject-name">Social Studies</div></div>
+              <div class="ncea-subject-row"><div class="ncea-subject-icon">🎭</div><div class="ncea-subject-name">Performing Arts</div></div>
+              <div class="ncea-subject-row"><div class="ncea-subject-icon">💻</div><div class="ncea-subject-name">Technology</div></div>
+              <div class="ncea-subject-row"><div class="ncea-subject-icon">🌿</div><div class="ncea-subject-name">Te Reo Māori</div></div>
+            </div>
+          </div>
+          <div class="ncea-globe">🌐 NZ · AU · UK · CA · US recognised</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="engagement">
+      <div class="react-count">
+        <div class="react-icons">
+          <div class="react-icon ri-like">👍</div>
+          <div class="react-icon ri-love">❤️</div>
+        </div>
+        <span>387</span>
+      </div>
+      <div class="share-count">33 comments · 72 shares</div>
+    </div>
+    <div class="action-bar">
+      <div class="action-btn"><span>👍</span> Like</div>
+      <div class="action-btn"><span>💬</span> Comment</div>
+      <div class="action-btn"><span>↗️</span> Share</div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center; margin-top:32px; color:#aaa; font-size:12px;">
+  课程介绍批次 · Rosehill College · May 2026
+</div>
+</body>
+</html>

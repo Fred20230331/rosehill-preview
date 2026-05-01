@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LINE 公式アカウント 発信プレビュー — Rosehill College</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1f1f1f;
+    font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', Arial, sans-serif;
+    padding: 32px 0 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-label {
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+  }
+
+  /* 手机外框 */
+  .phone-shell {
+    width: 390px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 44px;
+    box-shadow: 0 32px 100px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+
+  /* 状态栏 */
+  .status-bar {
+    background: #06c755;
+    padding: 14px 24px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  /* LINE 顶部导航 */
+  .line-nav {
+    background: #06c755;
+    padding: 10px 16px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .line-nav-back { font-size: 22px; color: #fff; opacity: 0.85; }
+  .line-nav-title { flex: 1; font-size: 17px; font-weight: 700; color: #fff; }
+  .line-nav-icons { display: flex; gap: 14px; font-size: 20px; color: #fff; opacity: 0.85; }
+
+  /* 聊天主区 */
+  .chat-area {
+    background: #b6e0f0;
+    overflow-y: auto;
+    max-height: 680px;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* 日期分割线 */
+  .date-divider {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(0,0,0,0.4);
+    margin: 4px 0;
+  }
+
+  /* 消息气泡（企业号左侧） */
+  .msg-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .msg-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #1C2B3A;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #C8972A;
+    font-weight: 800;
+    font-size: 13px;
+    align-self: flex-end;
+  }
+
+  .msg-content { flex: 1; max-width: 280px; }
+
+  .msg-sender {
+    font-size: 11px;
+    color: rgba(0,0,0,0.45);
+    margin-bottom: 4px;
+    padding-left: 2px;
+  }
+
+  /* 文字气泡 */
+  .bubble-text {
+    background: #fff;
+    border-radius: 4px 18px 18px 18px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.7;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    white-space: pre-line;
+  }
+
+  /* Rich Message 卡片 */
+  .rich-msg {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    max-width: 280px;
+  }
+
+  .rich-img {
+    width: 100%;
+    aspect-ratio: 2/1;
+    background: linear-gradient(to bottom, rgba(13,27,42,0.35) 0%, rgba(13,27,42,0.82) 100%), url('../图片素材/官网照片/life-at-rhc.avif') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .rich-img .ri-deco {
+    position: absolute;
+    right: -30px; top: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 24px solid rgba(200,151,42,0.08);
+  }
+
+  .rich-img .ri-tag {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: #06c755;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+  }
+
+  .rich-img .ri-body {
+    position: relative;
+    z-index: 2;
+    padding: 12px 14px;
+  }
+
+  .rich-img .ri-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .rich-img .ri-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .rich-img .ri-gold-bar {
+    position: absolute; left: 0; top: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, #C8972A, #f0c060, #C8972A);
+  }
+
+  .rich-details {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .rich-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #444;
+  }
+
+  .rich-detail-row .ri-icon { font-size: 15px; flex-shrink: 0; }
+
+  .rich-btn {
+    margin: 2px 14px 12px;
+    background: #06c755;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 11px;
+    border-radius: 8px;
+  }
+
+  /* Flex Message 卡片（Q&A型） */
+  .flex-msg {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    max-width: 280px;
+  }
+
+  .flex-header {
+    background: #1C2B3A;
+    padding: 14px;
+  }
+
+  .flex-header-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #C8972A;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  .flex-header-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .flex-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .flex-qa {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+  }
+
+  .flex-qa:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .flex-q {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1C2B3A;
+    margin-bottom: 4px;
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .flex-q-badge {
+    background: #06c755;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .flex-a {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.6;
+    padding-left: 32px;
+  }
+
+  .flex-footer {
+    padding: 0 14px 12px;
+  }
+
+  .flex-footer-btn {
+    background: #1C2B3A;
+    color: #C8972A;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  /* 时间戳 */
+  .msg-time {
+    font-size: 10px;
+    color: rgba(0,0,0,0.35);
+    align-self: flex-end;
+    margin-left: 4px;
+    flex-shrink: 0;
+  }
+
+  /* 底部输入栏 */
+  .chat-input {
+    background: #f7f7f7;
+    border-top: 1px solid #e0e0e0;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .input-icon { font-size: 24px; color: #aaa; }
+
+  .input-field {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 14px;
+    color: #ccc;
+  }
+
+  .send-btn {
+    width: 36px; height: 36px;
+    background: #06c755;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  /* Home bar */
+  .home-bar {
+    background: #f7f7f7;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .home-indicator {
+    width: 120px; height: 5px;
+    background: #000;
+    border-radius: 3px;
+    opacity: 0.15;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-label">💚 LINE 公式アカウント — 発信プレビュー · Rosehill College</div>
+
+<div class="phone-shell">
+
+  <!-- 状态栏 -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <span style="font-size:15px;">▲▲▲ 🔋</span>
+  </div>
+
+  <!-- LINE 导航 -->
+  <div class="line-nav">
+    <div class="line-nav-back">‹</div>
+    <div class="line-nav-title">Rosehill College 公式</div>
+    <div class="line-nav-icons">
+      <span>☎</span>
+      <span>⋮</span>
+    </div>
+  </div>
+
+  <!-- 聊天区域 -->
+  <div class="chat-area">
+
+    <div class="date-divider">2025年4月22日（火）</div>
+
+    <!-- 消息 1：Rich Message — イベント告知 -->
+    <div class="msg-row">
+      <div class="msg-avatar">RC</div>
+      <div class="msg-content">
+        <div class="msg-sender">Rosehill College 公式</div>
+        <div class="rich-msg">
+          <div class="rich-img">
+            <div class="ri-gold-bar"></div>
+            <div class="ri-deco"></div>
+            <div class="ri-tag">イベント告知</div>
+            <div class="ri-body">
+              <div class="ri-title">留学説明会<br>in 東京 開催</div>
+              <div class="ri-sub">2025年6月15日（日）</div>
+            </div>
+          </div>
+          <div class="rich-details">
+            <div class="rich-detail-row"><span class="ri-icon">📅</span><span><strong>6月15日（日）</strong> 13:00〜16:00</span></div>
+            <div class="rich-detail-row"><span class="ri-icon">📍</span><span>新宿区内 会議室</span></div>
+            <div class="rich-detail-row"><span class="ri-icon">🆓</span><span>参加費無料 · 定員制</span></div>
+          </div>
+          <div class="rich-btn">お申し込みはこちら →</div>
+        </div>
+      </div>
+      <div class="msg-time">10:02</div>
+    </div>
+
+    <!-- 消息 2：文字消息 — 生徒の声 -->
+    <div class="msg-row">
+      <div class="msg-avatar">RC</div>
+      <div class="msg-content">
+        <div class="bubble-text">ニュージーランドで過ごした2年間が、わたしの「当たり前」をすっかり変えてくれました。
+
+2012年に Rosehill College を卒業した <strong>Mariah Turner</strong>（南オークランド出身）が、4月29日にWBC世界タイトルマッチに挑みます。🥊
+
+彼女の歩みは、学校で培った粘り強さと信念そのものです。
+
+「海外に出ることで、子どもが変わった」という声を、わたしたちは毎年たくさんいただきます。
+
+お子さまの可能性を、一緒に考えてみませんか？
+ご質問はこのアカウントへ、お気軽にメッセージをどうぞ。</div>
+      </div>
+      <div class="msg-time">10:04</div>
+    </div>
+
+    <div class="date-divider">2025年5月1日（木）</div>
+
+    <!-- 消息 3：Flex Message — よくある質問 -->
+    <div class="msg-row">
+      <div class="msg-avatar">RC</div>
+      <div class="msg-content">
+        <div class="msg-sender">Rosehill College 公式</div>
+        <div class="flex-msg">
+          <div class="flex-header">
+            <div class="flex-header-title">よくあるご質問 TOP 3</div>
+            <div class="flex-header-sub">ニュージーランド中学留学</div>
+          </div>
+          <div class="flex-body">
+            <div class="flex-qa">
+              <div class="flex-q"><span class="flex-q-badge">Q1</span>英語が不安でも大丈夫？</div>
+              <div class="flex-a">EAL（英語追加学習）プログラムがあり、多くの留学生が1学期で日常会話レベルに到達しています。</div>
+            </div>
+            <div class="flex-qa">
+              <div class="flex-q"><span class="flex-q-badge">Q2</span>費用の目安は？</div>
+              <div class="flex-a">年間 NZD $38,000〜$45,000（学費・ホームステイ・生活費込）が目安です。</div>
+            </div>
+            <div class="flex-qa">
+              <div class="flex-q"><span class="flex-q-badge">Q3</span>子どもの生活サポートは？</div>
+              <div class="flex-a">日本語対応の専任コーディネーターが常駐し、保護者への定期レポートもお送りします。</div>
+            </div>
+          </div>
+          <div class="flex-footer">
+            <div class="flex-footer-btn">資料請求 · お問い合わせ</div>
+          </div>
+        </div>
+      </div>
+      <div class="msg-time">09:30</div>
+    </div>
+
+  </div><!-- end chat-area -->
+
+  <!-- 底部输入栏 -->
+  <div class="chat-input">
+    <div class="input-icon">😊</div>
+    <div class="input-field">メッセージを入力…</div>
+    <div class="input-icon">📎</div>
+    <div class="send-btn">➤</div>
+  </div>
+
+  <!-- Home bar -->
+  <div class="home-bar">
+    <div class="home-indicator"></div>
+  </div>
+
+</div><!-- end phone-shell -->
+
+<div style="text-align:center; margin-top: 32px; color: #666; font-size: 12px;">
+  LINE 公式アカウント プレビュー · Harbour View College（虚構モデル）
+</div>
+
+</body>
+</html>

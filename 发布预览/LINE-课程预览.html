@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LINE 课程预览 — Rosehill College</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0f0f0; font-family: -apple-system, 'Noto Sans', Arial, sans-serif; padding: 32px 0; }
+  .page-label { text-align: center; color: #888; font-size: 13px; letter-spacing: 2px; margin-bottom: 24px; }
+
+  .phone { width: 390px; margin: 0 auto; background: #fff; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); overflow: hidden; padding-bottom: 24px; }
+  .status-bar { background: #fff; padding: 12px 24px 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; }
+
+  .line-header { background: #00b300; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+  .line-back { font-size: 22px; color: #fff; }
+  .line-title { flex: 1; text-align: center; font-size: 17px; font-weight: 700; color: #fff; }
+  .line-menu { font-size: 22px; color: #fff; }
+
+  .chat-bg { background: #eef0f4; padding: 16px 12px; display: flex; flex-direction: column; gap: 12px; }
+
+  /* Date divider */
+  .date-divider { text-align: center; font-size: 12px; color: #999; padding: 4px 0; }
+
+  /* Received bubble */
+  .msg-row { display: flex; gap: 8px; align-items: flex-end; }
+  .msg-row.sent { flex-direction: row-reverse; }
+
+  .bubble-avatar { width: 36px; height: 36px; border-radius: 50%; background: #1C2B3A; display: flex; align-items: center; justify-content: center; color: #C8972A; font-weight: 800; font-size: 13px; flex-shrink: 0; }
+
+  .bubble-wrap { display: flex; flex-direction: column; gap: 3px; max-width: 80%; }
+  .bubble-name { font-size: 12px; color: #666; margin-bottom: 2px; }
+  .bubble {
+    background: #fff; border-radius: 12px 12px 12px 2px;
+    padding: 12px 14px; font-size: 14px; color: #333; line-height: 1.6;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  }
+  .bubble.sent { background: #aaeb00; border-radius: 12px 12px 2px 12px; }
+  .bubble-time { font-size: 11px; color: #aaa; }
+  .msg-row.sent .bubble-time { text-align: right; }
+
+  /* Image card bubble */
+  .card-bubble {
+    background: #fff; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1); max-width: 280px;
+  }
+  .card-img {
+    width: 100%; aspect-ratio: 1.5/1;
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a3a2a 60%, #0d2218 100%);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .card-ring { position: absolute; top: -30px; right: -30px; width: 160px; height: 160px; border-radius: 50%; border: 28px solid rgba(200,151,42,0.07); }
+  .card-bar { position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #C8972A, #f0c060, #C8972A); }
+  .card-inner { position: relative; z-index: 2; padding: 12px 14px; }
+  .card-tag { font-size: 9px; color: #C8972A; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .card-h { font-size: 16px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 4px; }
+  .card-s { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+  .card-body { padding: 12px 14px; }
+  .card-body .cb-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; font-size: 13px; color: #333; line-height: 1.5; }
+  .card-body .cb-icon { flex-shrink: 0; }
+  .card-body .cb-link { color: #00b300; font-weight: 600; font-size: 13px; text-decoration: none; margin-top: 8px; display: block; }
+
+  /* Bottom bar */
+  .line-input { background: #f7f7f7; border-top: 1px solid #e5e5e5; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+  .line-sticker { font-size: 22px; }
+  .line-text-box { flex: 1; background: #fff; border: 1px solid #e0e0e0; border-radius: 20px; padding: 8px 14px; font-size: 14px; color: #ccc; }
+  .line-send { width: 36px; height: 36px; background: #00b300; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+</style>
+</head>
+<body>
+
+<div class="page-label">💬 LINE · 课程介绍 — Rosehill College</div>
+
+<div class="phone">
+  <div class="status-bar"><span>9:41</span><span>●●● 🔋</span></div>
+
+  <div class="line-header">
+    <div class="line-back">‹</div>
+    <div class="line-title">Rosehill College</div>
+    <div class="line-menu">☰</div>
+  </div>
+
+  <div class="chat-bg">
+    <div class="date-divider">Thursday, May 1</div>
+
+    <!-- Card message -->
+    <div class="msg-row">
+      <div class="bubble-avatar">RC</div>
+      <div class="bubble-wrap">
+        <div class="bubble-name">Rosehill College</div>
+        <div class="card-bubble">
+          <div class="card-img">
+            <div class="card-ring"></div>
+            <div class="card-bar"></div>
+            <div class="card-inner">
+              <div class="card-tag">Course Overview · 2026</div>
+              <div class="card-h">What do students<br>study at Rosehill?</div>
+              <div class="card-s">Year 9–13 · NCEA · Performing Arts · Kapa Haka</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="cb-row"><span class="cb-icon">📚</span><span><strong>Year 9–10:</strong> English, Maths, Sciences, Arts, Languages, Tech, Sport</span></div>
+            <div class="cb-row"><span class="cb-icon">🎓</span><span><strong>Year 11–13:</strong> NCEA Levels 1, 2 & 3 — globally recognised</span></div>
+            <div class="cb-row"><span class="cb-icon">🎭</span><span><strong>Performing Arts:</strong> Drama, Music, Dance, Visual Arts → NCEA L3</span></div>
+            <div class="cb-row"><span class="cb-icon">🌿</span><span><strong>Kapa Haka:</strong> Māori cultural performance, Polyfest competitors</span></div>
+            <div class="cb-row"><span class="cb-icon">🌍</span><span><strong>International support:</strong> ELS classes + homestay + welfare office</span></div>
+            <a class="cb-link" href="#">→ rosehillcollege.school.nz</a>
+          </div>
+        </div>
+        <div class="bubble-time">10:24 AM ✓✓</div>
+      </div>
+    </div>
+
+    <!-- Text follow-up -->
+    <div class="msg-row">
+      <div class="bubble-avatar">RC</div>
+      <div class="bubble-wrap">
+        <div class="bubble">
+          Hi everyone! 👋<br><br>
+          Curious about what your student can study at Rosehill College?<br><br>
+          We offer a full Year 9–13 programme with NCEA qualifications recognised worldwide. Our Performing Arts and Kapa Haka programmes are among South Auckland's best.<br><br>
+          Message us or visit our website to learn more 🇳🇿
+        </div>
+        <div class="bubble-time">10:25 AM ✓✓</div>
+      </div>
+    </div>
+
+    <!-- Chinese version -->
+    <div class="date-divider">中文版本</div>
+    <div class="msg-row">
+      <div class="bubble-avatar">RC</div>
+      <div class="bubble-wrap">
+        <div class="bubble">
+          大家好！👋<br><br>
+          想了解 Rosehill College 的课程设置？<br><br>
+          📚 Year 9–10：英语·数学·科学·艺术·语言·科技·体育<br>
+          🎓 Year 11–13：NCEA Level 1/2/3，全球认可<br>
+          🎭 表演艺术：戏剧·音乐·舞蹈·视觉艺术，直至 NCEA Level 3<br>
+          🌿 Kapa Haka：毛利传统表演，曾获 Polyfest 奖项<br>
+          🌍 国际生支持：ELS 英语课 + 寄宿家庭 + 专职办公室<br><br>
+          欢迎私信咨询！🇳🇿<br>
+          inquiries@rosehillcollege.school.nz
+        </div>
+        <div class="bubble-time">10:26 AM ✓✓</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="line-input">
+    <div class="line-sticker">😊</div>
+    <div class="line-sticker">+</div>
+    <div class="line-text-box">Type a message…</div>
+    <div class="line-send">➤</div>
+  </div>
+</div>
+
+<div style="text-align:center; margin-top:32px; color:#aaa; font-size:12px; padding-bottom:32px;">
+  课程介绍批次 · Rosehill College · May 2026
+</div>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Blog 课程预览 — Rosehill College</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f9f9f9; font-family: Georgia, 'Times New Roman', serif; padding: 0; }
+  .page-label { text-align: center; background: #1C2B3A; color: #C8972A; font-size: 12px; letter-spacing: 2px; padding: 10px; font-family: -apple-system, sans-serif; }
+
+  /* Blog chrome */
+  .blog-chrome { background: #fff; border-bottom: 1px solid #e8e8e8; padding: 12px 24px; display: flex; align-items: center; gap: 12px; font-family: -apple-system, sans-serif; }
+  .chrome-dots { display: flex; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+  .chrome-url { flex: 1; background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 6px; padding: 6px 12px; font-size: 13px; color: #666; margin: 0 12px; }
+
+  .blog-wrap { max-width: 760px; margin: 0 auto; background: #fff; min-height: 100vh; }
+
+  /* Site header */
+  .site-header { background: #1C2B3A; padding: 16px 40px; display: flex; align-items: center; justify-content: space-between; font-family: -apple-system, sans-serif; }
+  .site-logo { font-size: 18px; font-weight: 800; color: #C8972A; letter-spacing: 1px; }
+  .site-nav { display: flex; gap: 20px; }
+  .site-nav a { font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; }
+  .site-nav a:hover { color: #C8972A; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a3a2a 60%, #0d2218 100%);
+    padding: 56px 40px;
+    position: relative; overflow: hidden;
+  }
+  .hero-ring { position: absolute; top: -60px; right: -60px; width: 360px; height: 360px; border-radius: 50%; border: 56px solid rgba(200,151,42,0.05); }
+  .hero-bar { position: absolute; left: 0; top: 0; width: 5px; height: 100%; background: linear-gradient(180deg, #C8972A, #f0c060, #C8972A); }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-cat { font-size: 11px; color: #C8972A; letter-spacing: 3px; text-transform: uppercase; font-family: -apple-system, sans-serif; margin-bottom: 16px; }
+  .hero-h1 { font-size: 36px; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 12px; font-family: -apple-system, sans-serif; }
+  .hero-sub { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.6; font-family: -apple-system, sans-serif; max-width: 560px; }
+  .hero-meta { margin-top: 24px; display: flex; gap: 20px; font-size: 13px; color: rgba(255,255,255,0.35); font-family: -apple-system, sans-serif; }
+  .hero-meta span::before { content: '· '; }
+  .hero-meta span:first-child::before { content: ''; }
+
+  /* Article */
+  .article { padding: 40px 40px 60px; }
+  .article p { margin-bottom: 20px; font-size: 17px; color: #333; line-height: 1.85; }
+  .article h2 { font-size: 22px; font-weight: 700; color: #1C2B3A; margin: 36px 0 14px; font-family: -apple-system, sans-serif; padding-left: 12px; border-left: 3px solid #C8972A; }
+  .article h3 { font-size: 18px; font-weight: 700; color: #1C2B3A; margin: 24px 0 10px; font-family: -apple-system, sans-serif; }
+  .article strong { color: #1C2B3A; }
+  .article .highlight { background: rgba(200,151,42,0.12); color: #7a5700; padding: 2px 6px; border-radius: 4px; }
+  .article .callout { background: #f5f9ff; border: 1px solid #cfe2ff; border-radius: 8px; padding: 20px 24px; margin: 24px 0; font-size: 15px; color: #444; line-height: 1.7; font-family: -apple-system, sans-serif; }
+  .article .callout.gold { background: #fffbf0; border-color: #fde9a8; }
+  .article .callout .callout-title { font-weight: 700; color: #1C2B3A; font-size: 15px; margin-bottom: 8px; }
+  .article .callout.gold .callout-title { color: #7a5700; }
+  .article table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; font-family: -apple-system, sans-serif; }
+  .article table th { background: #1C2B3A; color: #C8972A; padding: 12px 16px; text-align: left; }
+  .article table td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; color: #444; }
+  .article table tr:last-child td { border-bottom: none; }
+  .article ul { margin: 16px 0 20px 20px; }
+  .article li { font-size: 17px; color: #333; line-height: 1.8; margin-bottom: 6px; }
+  .article .subject-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; font-family: -apple-system, sans-serif; }
+  .article .subject-item { background: #f8f8f8; border-radius: 10px; padding: 14px; }
+  .article .subject-item .si-icon { font-size: 24px; margin-bottom: 6px; }
+  .article .subject-item .si-name { font-size: 14px; font-weight: 700; color: #1C2B3A; }
+  .article .subject-item .si-desc { font-size: 12px; color: #999; margin-top: 3px; }
+  .article .contact-box { background: #f3f9f5; border: 1px solid #c3e6cb; border-radius: 10px; padding: 20px 24px; margin: 28px 0; font-family: -apple-system, sans-serif; }
+  .article .contact-box p { font-size: 15px; margin-bottom: 8px; color: #333; }
+  .article .contact-box p:last-child { margin-bottom: 0; }
+
+  /* Footer */
+  .blog-footer { background: #1C2B3A; padding: 24px 40px; font-family: -apple-system, sans-serif; }
+  .blog-footer p { font-size: 13px; color: rgba(255,255,255,0.4); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="page-label">✍️ BLOG · 课程介绍 — Rosehill College</div>
+<div class="blog-chrome">
+  <div class="chrome-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+  <div class="chrome-url">rosehillcollege.school.nz/blog/courses-programmes-guide</div>
+</div>
+
+<div class="blog-wrap">
+  <div class="site-header">
+    <div class="site-logo">ROSEHILL COLLEGE</div>
+    <div class="site-nav">
+      <a href="#">About</a><a href="#">Programmes</a><a href="#">International</a><a href="#">Contact</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-ring"></div>
+    <div class="hero-bar"></div>
+    <div class="hero-inner">
+      <div class="hero-cat">Curriculum Guide · International Students</div>
+      <div class="hero-h1">Rosehill College Courses &amp; Programmes:<br>A Complete Guide for International Families</div>
+      <div class="hero-sub">From Year 9 foundations to NCEA Level 3 — including Performing Arts, Kapa Haka, and our dedicated international student support services.</div>
+      <div class="hero-meta">
+        <span>Rosehill College</span>
+        <span>May 2026</span>
+        <span>8 min read</span>
+        <span>Papakura, Auckland</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="article">
+    <p>If you're researching New Zealand secondary schools for your child, one of the first questions on your list is probably: <strong>what does the school actually teach, and how does the qualification system work?</strong></p>
+
+    <p>This guide covers the full curriculum at <strong>Rosehill College</strong> — a co-educational public secondary school in Papakura, South Auckland, serving students from Year 9 to Year 13.</p>
+
+    <h2>How New Zealand Secondary Education Works: The NCEA Framework</h2>
+    <p>New Zealand's national qualification system — <strong>NCEA (National Certificate of Educational Achievement)</strong> — is credit-based, not exam-based. Students accumulate credits throughout the year through internal assessments and external exams. There is no single high-stakes national exam.</p>
+
+    <table>
+      <tr><th>Year Level</th><th>NCEA Level</th><th>Typical Age</th><th>Notes</th></tr>
+      <tr><td>Year 11</td><td>Level 1</td><td>15–16</td><td>Foundation qualifications</td></tr>
+      <tr><td>Year 12</td><td>Level 2</td><td>16–17</td><td>Subject specialisation begins</td></tr>
+      <tr><td>Year 13</td><td>Level 3</td><td>17–18</td><td>University entrance requirement</td></tr>
+    </table>
+
+    <div class="callout">
+      <div class="callout-title">International Recognition</div>
+      NCEA Level 3 is accepted by universities in New Zealand, Australia, the United Kingdom, Canada, and the United States — giving students a genuinely global qualification pathway from a South Auckland public school.
+    </div>
+
+    <h2>Year 9 &amp; Year 10: A Broad Foundation</h2>
+    <p>The first two years are designed as an exploratory phase. Students sample a wide range of subjects before beginning to specialise from Year 11 onward.</p>
+
+    <div class="subject-grid">
+      <div class="subject-item"><div class="si-icon">📖</div><div class="si-name">English</div><div class="si-desc">Reading, writing, oral communication</div></div>
+      <div class="subject-item"><div class="si-icon">📐</div><div class="si-name">Mathematics</div><div class="si-desc">Algebra, geometry, statistics</div></div>
+      <div class="subject-item"><div class="si-icon">🔬</div><div class="si-name">Sciences</div><div class="si-desc">Biology, Chemistry, Physics, Earth Science</div></div>
+      <div class="subject-item"><div class="si-icon">🌍</div><div class="si-name">Social Studies</div><div class="si-desc">History, Geography, Economics</div></div>
+      <div class="subject-item"><div class="si-icon">💻</div><div class="si-name">Technology</div><div class="si-desc">Design, coding, digital media</div></div>
+      <div class="subject-item"><div class="si-icon">🎨</div><div class="si-name">Arts</div><div class="si-desc">Music, Drama, Dance, Visual Arts</div></div>
+    </div>
+
+    <h2>Rosehill's Signature Programmes</h2>
+
+    <h3>Performing Arts</h3>
+    <p>Rosehill College has one of the strongest Performing Arts programmes among public secondary schools in South Auckland. The school's dedicated Drama and Music facilities were opened in 2000 by Prime Minister <strong>Helen Clark</strong> — a lasting signal of the school's commitment to arts education.</p>
+
+    <ul>
+      <li><strong>Drama</strong> — from Year 9 improvisation through to full theatrical productions at NCEA Level 3</li>
+      <li><strong>Music</strong> — classical and contemporary, instrumental and vocal</li>
+      <li><strong>Dance</strong> — contemporary, Pacific, and movement-based performance</li>
+      <li><strong>Visual Arts</strong> — painting, photography, mixed media, NCEA portfolios</li>
+    </ul>
+
+    <h3>Kapa Haka</h3>
+    <div class="callout gold">
+      <div class="callout-title">🌿 What is Kapa Haka?</div>
+      Kapa Haka is Māori performing arts — song (<em>waiata</em>), dance, and cultural expression rooted in the indigenous heritage of Aotearoa New Zealand. At Rosehill, it is a living expression of the school's bicultural identity. The school's competitive group has performed at <strong>Polyfest</strong>, one of New Zealand's largest secondary school cultural festivals. For international students, Kapa Haka offers a direct way to engage with Māori culture and build relationships with New Zealand-born peers.
+    </div>
+
+    <h3>Sports</h3>
+    <p>Rosehill operates a modern gymnasium and multi-purpose courts, fielding competitive teams across multiple sports. The school's <strong>House system</strong> — six Houses including Atawhai, Kahurangi, and Pounamu — builds community through inter-house competitions from the first week.</p>
+
+    <h2>International Student Support</h2>
+    <ul>
+      <li><strong>English Language Support (ELS)</strong> — classes running in parallel with regular subjects for non-native speakers</li>
+      <li><strong>International Student Office</strong> — dedicated staff from enrolment through graduation</li>
+      <li><strong>Homestay placement</strong> — school-vetted families, preferences accommodated before placement</li>
+      <li><strong>Pastoral care</strong> — academic monitoring, peer tutoring, and counselling on campus</li>
+      <li>Fully compliant with New Zealand's <em>Education (Pastoral Care of Tertiary and International Learners) Code 2021</em></li>
+    </ul>
+
+    <div class="contact-box">
+      <p>📮 <strong>Email:</strong> inquiries@rosehillcollege.school.nz</p>
+      <p>📞 <strong>Phone:</strong> +64 9 295 0661</p>
+      <p>🌐 <strong>Website:</strong> rosehillcollege.school.nz</p>
+      <p>📍 5 Edinburgh Avenue, Rosehill, Papakura, Auckland 2113</p>
+    </div>
+
+    <p style="font-style:italic; color:#999; font-size:15px;">Rosehill College — Together we create an environment for personal excellence.</p>
+  </div>
+
+  <div class="blog-footer">
+    <p>© 2026 Rosehill College · Papakura, Auckland, New Zealand · rosehillcollege.school.nz</p>
+  </div>
+</div>
+
+</body>
+</html>

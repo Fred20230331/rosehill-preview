@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Naver 블로그 课程预览 — Rosehill College</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f5f5f5; font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; padding: 32px 0; }
+  .page-label { text-align: center; color: #888; font-size: 13px; letter-spacing: 2px; margin-bottom: 24px; }
+
+  .naver-wrap { max-width: 640px; margin: 0 auto; background: #fff; border-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); overflow: hidden; }
+
+  /* Naver header */
+  .naver-header { background: #03c75a; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+  .naver-logo { font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -1px; font-family: sans-serif; }
+  .naver-sub { font-size: 14px; color: rgba(255,255,255,0.7); margin-left: 2px; }
+  .naver-search { flex: 1; background: #fff; border-radius: 20px; padding: 6px 14px; font-size: 13px; color: #ccc; margin: 0 10px; }
+
+  /* Blog post header */
+  .post-header { padding: 24px 28px 16px; border-bottom: 1px solid #f0f0f0; }
+  .post-category { font-size: 12px; color: #03c75a; font-weight: 700; margin-bottom: 8px; }
+  .post-title { font-size: 24px; font-weight: 700; color: #1a1a1a; line-height: 1.35; margin-bottom: 12px; }
+  .post-meta { display: flex; align-items: center; gap: 12px; font-size: 13px; color: #999; }
+  .post-avatar { width: 32px; height: 32px; border-radius: 50%; background: #1C2B3A; display: flex; align-items: center; justify-content: center; color: #C8972A; font-weight: 800; font-size: 11px; flex-shrink: 0; }
+
+  /* Hero card */
+  .hero-card {
+    margin: 0 28px 24px;
+    border-radius: 10px; overflow: hidden;
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a3a2a 60%, #0d2218 100%);
+    position: relative;
+  }
+  .hero-card-img {
+    padding: 32px 28px;
+    position: relative; overflow: hidden;
+  }
+  .hc-ring { position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; border-radius: 50%; border: 32px solid rgba(200,151,42,0.06); }
+  .hc-bar { position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #C8972A, #f0c060, #C8972A); }
+  .hc-inner { position: relative; z-index: 2; }
+  .hc-tag { font-size: 10px; color: #C8972A; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .hc-title { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.25; margin-bottom: 8px; }
+  .hc-sub { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; margin-bottom: 16px; }
+  .hc-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .hc-pill { background: rgba(200,151,42,0.1); border: 1px solid rgba(200,151,42,0.25); border-radius: 20px; padding: 4px 12px; font-size: 11px; color: rgba(255,255,255,0.7); }
+
+  /* Article body */
+  .post-body { padding: 0 28px 28px; }
+  .post-body p { font-size: 16px; color: #333; line-height: 1.9; margin-bottom: 16px; }
+  .post-body h2 { font-size: 20px; font-weight: 700; color: #1a1a1a; margin: 28px 0 12px; padding-left: 10px; border-left: 3px solid #03c75a; }
+  .post-body h3 { font-size: 17px; font-weight: 700; color: #1a1a1a; margin: 20px 0 10px; }
+  .post-body strong { color: #1a1a1a; }
+  .post-body table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  .post-body table th { background: #1C2B3A; color: #C8972A; padding: 10px 14px; text-align: left; }
+  .post-body table td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; }
+  .post-body .callout { background: #f0fff5; border: 1px solid #c3e6cb; border-left: 4px solid #03c75a; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 15px; color: #333; line-height: 1.7; }
+  .post-body .callout.gold { background: #fffbf0; border-color: #fde9a8; border-left-color: #C8972A; }
+  .post-body ul { margin: 12px 0 16px 20px; }
+  .post-body li { font-size: 16px; color: #333; line-height: 1.8; margin-bottom: 6px; }
+  .post-body .contact { background: #f0fff5; border: 1px solid #c3e6cb; border-radius: 8px; padding: 18px 20px; margin: 20px 0; }
+  .post-body .contact p { font-size: 14px; margin-bottom: 8px; }
+  .post-body .contact p:last-child { margin-bottom: 0; }
+  .post-body .eng-section { background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 24px 0; }
+  .post-body .eng-section .es-title { font-size: 13px; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px; }
+  .post-body .eng-section p { font-family: -apple-system, sans-serif; font-size: 14px; color: #444; }
+  .post-body .eng-section ul { font-family: -apple-system, sans-serif; }
+  .post-body .eng-section li { font-size: 14px; }
+
+  /* Engage bar */
+  .engage-bar { padding: 14px 28px; border-top: 1px solid #f0f0f0; display: flex; gap: 16px; align-items: center; }
+  .engage-btn { display: flex; align-items: center; gap: 6px; font-size: 14px; color: #666; padding: 6px 14px; border: 1px solid #e8e8e8; border-radius: 20px; cursor: pointer; }
+  .engage-btn:hover { background: #f5f5f5; }
+</style>
+</head>
+<body>
+
+<div class="page-label">🟢 Naver 블로그 · 课程介绍 — Rosehill College</div>
+
+<div class="naver-wrap">
+  <div class="naver-header">
+    <div class="naver-logo">N</div>
+    <div class="naver-sub">블로그</div>
+    <div class="naver-search">뉴질랜드 중학교 커리큘럼 검색...</div>
+  </div>
+
+  <div class="post-header">
+    <div class="post-category">📚 뉴질랜드 유학 정보</div>
+    <div class="post-title">뉴질랜드 중학교 커리큘럼 완벽 정리 — Rosehill College 과목 소개 🇳🇿</div>
+    <div class="post-meta">
+      <div class="post-avatar">RC</div>
+      <span>Rosehill College 공식</span>
+      <span>·</span>
+      <span>2026.05.01</span>
+      <span>·</span>
+      <span>조회 2,841</span>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <div class="hero-card-img">
+      <div class="hc-ring"></div>
+      <div class="hc-bar"></div>
+      <div class="hc-inner">
+        <div class="hc-tag">Curriculum Guide · Rosehill College</div>
+        <div class="hc-title">뉴질랜드 중학교,<br>어떤 과목을 배울까요?</div>
+        <div class="hc-sub">NCEA 자격증부터 Kapa Haka까지 — 완벽 가이드</div>
+        <div class="hc-pills">
+          <div class="hc-pill">🏫 Rosehill College</div>
+          <div class="hc-pill">📍 오클랜드 파파쿠라</div>
+          <div class="hc-pill">🎓 Year 9–13</div>
+          <div class="hc-pill">🌿 Kapa Haka</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-body">
+    <p>안녕하세요! 뉴질랜드 유학을 고려 중인 학생과 학부모님들이 가장 많이 물어보시는 것 중 하나가 바로 <strong>"어떤 과목을 배우나요?"</strong> 입니다. 오늘 Rosehill College의 커리큘럼을 자세히 정리해 드릴게요.</p>
+
+    <h2>📘 뉴질랜드 중등교육 시스템: NCEA란?</h2>
+    <p>뉴질랜드 고등학교의 핵심 자격증은 <strong>NCEA (National Certificate of Educational Achievement)</strong> 입니다. 한국의 수능과 달리, NCEA는 <strong>학점 누적 방식</strong>으로 연중 여러 번의 평가를 통해 학점을 쌓아갑니다.</p>
+
+    <table>
+      <tr><th>학년</th><th>NCEA 레벨</th><th>설명</th></tr>
+      <tr><td>Year 11</td><td>Level 1</td><td>기초 학업 자격</td></tr>
+      <tr><td>Year 12</td><td>Level 2</td><td>심화 과목 선택</td></tr>
+      <tr><td>Year 13</td><td>Level 3</td><td>대학 입학 자격</td></tr>
+    </table>
+
+    <div class="callout">
+      💡 NCEA Level 3는 뉴질랜드, 호주, 영국, 캐나다, 미국 주요 대학에서 인정받고 있습니다.
+    </div>
+
+    <h2>📚 Year 9–10: 폭넓은 기초 과목</h2>
+    <ul>
+      <li>영어 · 수학 · 과학 (생물·화학·물리·지구과학)</li>
+      <li>사회 (역사·지리·경제 기초)</li>
+      <li>기술 &amp; 디지털 리터러시</li>
+      <li>체육 및 건강</li>
+      <li>예술 (음악, 무용, 드라마, 시각 예술)</li>
+      <li>Te Reo Māori (마오리어)</li>
+    </ul>
+
+    <h2>🌟 Rosehill College의 특색 프로그램</h2>
+
+    <h3>🎭 공연 예술 (Performing Arts)</h3>
+    <p>2000년, 당시 총리 <strong>Helen Clark</strong>이 직접 참석하여 드라마·음악 시설을 개관했습니다. 이 프로그램은 Year 9부터 NCEA Level 3까지 이어집니다.</p>
+    <ul>
+      <li>드라마 (Drama)</li>
+      <li>음악 (Music) — 기악·성악·음악 이론</li>
+      <li>무용 (Dance) — 현대무용 및 폴리네시안 스타일 포함</li>
+      <li>시각 예술 (Visual Arts)</li>
+    </ul>
+
+    <h3>🌿 Kapa Haka</h3>
+    <div class="callout gold">
+      <strong>Kapa Haka</strong>는 마오리 전통 공연 예술로, 노래(waiata), 춤, 문화적 표현이 결합된 예술 형식입니다. Rosehill College의 경쟁 팀은 뉴질랜드 최대 중학교 문화 축제 중 하나인 <strong>Polyfest</strong>에 출전하여 수상 경력을 보유하고 있습니다. 유학생들에게는 마오리 문화와 직접 교류할 수 있는 특별한 기회입니다.
+    </div>
+
+    <h2>🌍 유학생 지원 시스템</h2>
+    <ul>
+      <li><strong>영어 언어 지원 (ELS)</strong> — 비영어권 학생을 위한 별도 수업</li>
+      <li><strong>전담 유학생 사무국</strong> — 입학부터 졸업까지 전담 관리</li>
+      <li><strong>홈스테이 배정</strong> — 학교 심사 가정, 선호도 반영</li>
+      <li>뉴질랜드 교육 보호 법규 (2021) 완전 준수</li>
+    </ul>
+
+    <div class="contact">
+      <p>📮 <strong>이메일:</strong> inquiries@rosehillcollege.school.nz</p>
+      <p>📞 <strong>전화:</strong> +64 9 295 0661</p>
+      <p>🌐 <strong>웹사이트:</strong> rosehillcollege.school.nz</p>
+      <p>📍 5 Edinburgh Avenue, Papakura, Auckland 2113</p>
+    </div>
+
+    <!-- English section -->
+    <div class="eng-section">
+      <div class="es-title">English Summary</div>
+      <p><strong>Rosehill College — Curriculum Overview</strong></p>
+      <p>Co-educational public secondary school in Papakura, South Auckland. Year 9–13 · NCEA Levels 1–3 · Est. 1970.</p>
+      <ul>
+        <li>Broad Year 9–10 foundation across all subject areas</li>
+        <li>NCEA credit-based pathway, internationally recognised</li>
+        <li>Performing Arts: Drama, Music, Dance, Visual Arts to NCEA L3</li>
+        <li>Kapa Haka: Polyfest-competing Māori cultural programme</li>
+        <li>Full international support: ELS, homestay, welfare office</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="engage-bar">
+    <div class="engage-btn">👍 공감 284</div>
+    <div class="engage-btn">💬 댓글 47</div>
+    <div class="engage-btn">↗️ 공유</div>
+  </div>
+</div>
+
+<div style="text-align:center; margin-top:32px; color:#aaa; font-size:12px; padding-bottom:32px;">
+  课程介绍批次 · Rosehill College · May 2026
+</div>
+</body>
+</html>
